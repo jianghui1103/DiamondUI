@@ -23,3 +23,27 @@
     vue3的template支持多个根标签, vue2不支持
     vue3有createApp(), 而Vue2是 new Vue()
     createApp(组件), new Vue({template,render})
+
+# 引入vue-router
+1. npm info vue-router versions 查看版本号
+2. yarn add vue-router@4.0.0-beta.9 安装最新版本
+3. 在main.js 中引入vue-router import { createWebHashHistory, createRouter } from 'vue-router'
+4. 将main.js改成main.ts
+5. const history = createWebHashHistory()
+    const router = createRouter({
+        history: history,
+        routes: [
+            {path: '/', component: Frank}
+        ]
+    })
+
+# 报错 找不到xxx.vue
+原因 ts只认识.ts 文件 不认识.vue 文件
+解决方法 
+添加 shims-vue.d.ts 
+declare module '*.vue' {
+    import { ComponentOptions } from 'vue'
+    const componentOptions: ComponentOptions
+    export default componentOptions
+}
+
