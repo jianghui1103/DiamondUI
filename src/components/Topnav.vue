@@ -5,7 +5,7 @@
         <li>菜单1</li>
         <li>菜单2</li>
     </ul>
-    <span class="toggleMenu"></span>
+    <span class="toggleAside"></span>
 </div>
 </template>
 
@@ -52,7 +52,7 @@ export default {
         }
     }
 
-    >.toggleMenu {
+    >.toggleAside {
         display: inline-block;
         width: 24px;
         height: 24px;
@@ -61,6 +61,7 @@ export default {
         left: 16px;
         top: 50%;
         transform: translateY(-50%);
+        display: none;
     }
 
     @media (max-width: 500px) {
@@ -70,6 +71,10 @@ export default {
 
         >.logo {
             margin: 0 auto;
+        }
+
+        >.toggleAside {
+            display: inline-block;
         }
     }
 }
