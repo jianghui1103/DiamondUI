@@ -47,3 +47,5 @@ declare module '*.vue' {
     export default componentOptions
 }
 
+# vscode 报错 只允许一个根标签
+解决办法 配置里面添加  "vetur.validation.template": false, 
