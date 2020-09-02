@@ -11,7 +11,7 @@ export default {
     name: 'App',
     setup() {
         const menuVisible = ref(false) // set
-        provide('xxx', menuVisible) // 所有的都可以使用
+        provide('menuVisible', menuVisible) // 所有的都可以使用
     }
 }
 </script>
