@@ -23,6 +23,8 @@
     vue3的template支持多个根标签, vue2不支持
     vue3有createApp(), 而Vue2是 new Vue()
     createApp(组件), new Vue({template,render})
+    使用v-model 代替了以前的 v-model和 .sync
+    新建content.emit 与 this.$emit 作用相同
 
 # 引入vue-router
 1. npm info vue-router versions 查看版本号
@@ -50,6 +52,15 @@ declare module '*.vue' {
 # vscode 报错 只允许一个根标签
 解决办法 配置里面添加  "vetur.validation.template": false, 
 
+# ref
+使用ref 创建内部数据
+
+# :value 和 @input 
+使用 :value 和 @input 来进行父子组件交流(组件通信)
+
 # v-model
 要求： 属性名任意, 假设为X 事件名必须为 "update:x" 
 效果： <Switch :value="y" @update:value=" y = $event" /> 可以简写为 <Switch v-model:value="y"/>
+
+# context.emit
+新增了context.emit 与 this.$emit 作用相同 参数是 事件名 事件参数 
