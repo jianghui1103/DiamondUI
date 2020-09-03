@@ -1,6 +1,8 @@
 <template>
     <div>
-        <Switch :value="y" @input=" y = $event" />
+        <!-- 自动监听 -->
+        <Switch v-model:value="y" />
+        <!-- <Switch :value="y" @update:value=" y = $event" /> -->
     </div>
 </template>
 

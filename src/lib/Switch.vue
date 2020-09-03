@@ -12,7 +12,8 @@ export default {
     },
     setup(props,context) {
         const toggle = ()=> {
-          context.emit('input', !props.value)
+          // 参数是 事件名 事件参数      父元素的$event的值是emit 的第二个参数
+          context.emit('update:value', !props.value) // 触发父元素的input 事件 
         }
         return {toggle}
     }
