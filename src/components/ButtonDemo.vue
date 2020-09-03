@@ -1,6 +1,9 @@
 <template>
     <div>
-        <Button @click="onClick" @focus="onClick" @mouseover="onClick">nihao</Button>
+        <Button >nihao</Button>
+        <Button theme="button">nihao</Button>
+        <Button theme="link">nihao</Button>
+        <Button theme="text">nihao</Button>
     </div>
 </template>
 

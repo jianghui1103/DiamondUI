@@ -71,3 +71,9 @@ declare module '*.vue' {
 使用$attrs 或者 context.attrs 获取所有属性
 使用 v-bind = "$attrs" 批量绑定属性
 使用const { size, ...rest } = context.attrs 将属性分开  
+
+# attrs 和 props 区别
+props 需要声明才能取值, attrs不用声明
+props 不包含事件, attrs 包含
+props 没有声明的属性会在 attrs中
+props 支持string以外的类型, attr只有string类型
