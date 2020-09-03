@@ -64,3 +64,10 @@ declare module '*.vue' {
 
 # context.emit
 新增了context.emit 与 this.$emit 作用相同 参数是 事件名 事件参数 
+
+# vue3属性绑定
+默认所有属性都绑定到根元素
+使用inheritAttrs = false 可以取消默认绑定
+使用$attrs 或者 context.attrs 获取所有属性
+使用 v-bind = "$attrs" 批量绑定属性
+使用const { size, ...rest } = context.attrs 将属性分开  
