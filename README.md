@@ -50,3 +50,6 @@ declare module '*.vue' {
 # vscode 报错 只允许一个根标签
 解决办法 配置里面添加  "vetur.validation.template": false, 
 
+# v-model
+要求： 属性名任意, 假设为X 事件名必须为 "update:x" 
+效果： <Switch :value="y" @update:value=" y = $event" /> 可以简写为 <Switch v-model:value="y"/>

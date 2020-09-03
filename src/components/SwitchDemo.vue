@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- 自动监听 -->
-        <Switch v-model:value="y" />
+        <Switch v-model:value="bool" />
         <!-- <Switch :value="y" @update:value=" y = $event" /> -->
     </div>
 </template>
@@ -12,8 +12,8 @@ import { ref } from 'vue';
 export default {
     components : { Switch },
     setup() {
-        const y = ref(true)
-        return {y}
+        const bool = ref(true)
+        return {bool}
     }
 }
 </script>
