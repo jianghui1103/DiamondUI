@@ -3,7 +3,7 @@
     <div class="logo">LOGO</div>
     <ul class="menu">
         <li>菜单1</li>
-        <li>菜单2s</li>
+        <li>菜单2</li>
     </ul>
     <span class="toggleAside" @click="toggleMenu"></span>
 </div>
@@ -18,6 +18,7 @@ export default {
     setup() {
         const menuVisible = inject < Ref < boolean > > ('menuVisible') // get
         const toggleMenu = () => {
+            console.log(menuVisible.value)
             menuVisible.value = !menuVisible.value
         }
         return {
