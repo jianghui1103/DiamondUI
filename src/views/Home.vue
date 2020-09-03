@@ -3,7 +3,7 @@
     <Topnav />
     <div class="banner">
         <h1>DiamondUI</h1>
-        <h1>一个江辉创建的Vue3 UI框架</h1>
+        <h1>一个Vue3 UI框架</h1>
         <p class="actions">
             <a href="https://github.com/jianghui1103/DiamondUI" target="_brank">GitHub</a>
             <router-link to="/doc">开始</router-link>

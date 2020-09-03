@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button @click="toggle" :class="{ checked: value }"> <span></span> </button>
+        <button class="Diamond-switch" @click="toggle" :class="{ 'Diamond-checked' : value }"> <span></span> </button>
     </div>
 </template>
 
@@ -23,7 +23,7 @@ export default {
 <style lang="scss" scoped>
   $h: 22px;
   $h2: $h - 4px;
-  button{
+  .Diamond-switch{
     height: $h;
     width: $h*2;
     border: none;
@@ -41,7 +41,7 @@ export default {
       border-radius: $h2 / 2;
       transition: all 250ms;
     } 
-      &.checked {
+      &.Diamond-checked {
       background: #1890ff;
         > span {
           left: calc(100% - #{$h2} - 2px);
@@ -53,7 +53,7 @@ export default {
       &:active{
         > span {width: $h2 + 4px;}
       }
-      &.checked:active{
+      &.Diamond-checked:active{
         > span {width: $h2 + 4px; margin-left: -4px;}
       }
   }
