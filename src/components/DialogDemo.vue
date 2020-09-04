@@ -5,7 +5,21 @@
     <h1>实例1</h1>
     <Button @click="toggle">toggle</Button>
     <!-- <Dialog :visible="isVisible" @update:visible = "isVisible = $event"></Dialog> -->
-    <Dialog v-model:visible="isVisible" :closeOnClickOverlay="false" :cancel="cancel" :ok="ok"></Dialog>
+    <Dialog 
+        v-model:visible="isVisible" 
+        :closeOnClickOverlay="false" 
+        :cancel="cancel" :ok="ok"
+
+    >   
+        <template v-slot:title>
+            <div>标题</div>
+        </template>
+        <template v-slot:content>
+            <div>11111</div>
+            <div>222</div>
+        </template>
+
+    </Dialog>
 </template>
 
 <script lang="ts">

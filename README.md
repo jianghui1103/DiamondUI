@@ -25,6 +25,8 @@
     createApp(组件), new Vue({template,render})
     使用v-model 代替了以前的 v-model和 .sync
     新建content.emit 与 this.$emit 作用相同
+    slot插槽改变, 用法改成v-slot:插槽名
+    Teleport标签, 是将内容放在什么下面
 
 # 引入vue-router
 1. npm info vue-router versions 查看版本号
@@ -77,3 +79,6 @@ props 需要声明才能取值, attrs不用声明
 props 不包含事件, attrs 包含
 props 没有声明的属性会在 attrs中
 props 支持string以外的类型, attr只有string类型
+
+# Teleport 
+是一个标签， <Teleport to="body">内容</Teleport> 中间包含的内容放到body下面

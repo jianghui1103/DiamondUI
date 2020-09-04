@@ -1,21 +1,23 @@
 <template>
     <template v-if="visible">
-        <div class="Diamond-dialog-overlay" @click="onClickOverlay"></div>
-        <div class="Diamond-dialog-wrapper">
-            <div class="Diamond-dialog">
-                <header>标题
-                    <span class="Diamond-dialog-close" @click="close"></span>
-                </header>
-                <main>
-                    <p>第一行子</p>
-                    <p>第二行子</p>
-                </main>
-                <footer>
-                    <Button level="main" @click="ok">确定</Button>
-                    <Button @click="cancel">取消</Button>
-                </footer>
-            </div>
-        </div>
+        <Teleport to="body">
+          <div class="Diamond-dialog-overlay" @click="onClickOverlay"></div>
+          <div class="Diamond-dialog-wrapper">
+              <div class="Diamond-dialog">
+                  <header>
+                      <slot name="title" />
+                      <span class="Diamond-dialog-close" @click="close"></span>
+                  </header>
+                  <main>
+                      <slot name="content" />
+                  </main>
+                  <footer>
+                      <Button level="main" @click="ok">确定</Button>
+                      <Button @click="cancel">取消</Button>
+                  </footer>
+              </div>
+          </div>
+        </Teleport>
     </template>
 </template>
 
