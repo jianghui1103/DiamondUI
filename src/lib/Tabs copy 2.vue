@@ -5,7 +5,7 @@
         <div class="Diamond-tabs-nav-indicator" ref="indicator"></div>
     </div>
     <div class="Diamond-tabs-content">
-        <component :is="current" :key="current.props.title" />
+        <component class="Diamond-tabs-content-item" v-for="(c,index) in defaults" :key="index" :is="c" :class="{selected: c.props.title === selected}" />
     </div>
 </div>
 </template>
@@ -110,6 +110,14 @@ $border-color: #d9d9d9;
 
     &-content {
         padding: 8px 0;
+
+        &-item {
+            display: none;
+
+            &.selected {
+                display: block;
+            }
+        }
     }
 }
 </style>
