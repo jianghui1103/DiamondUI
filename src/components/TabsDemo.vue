@@ -22,7 +22,7 @@ export default {
         Tab
     },
     setup() {
-        const selected = ref('导航1')
+        const selected = ref('导航2')
         return {
             selected
         }
