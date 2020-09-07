@@ -82,3 +82,7 @@ props 支持string以外的类型, attr只有string类型
 
 # Teleport 
 是一个标签， <Teleport to="body">内容</Teleport> 中间包含的内容放到body下面
+
+# 如何检查子组件类型
+defaults = context.slots.default()
+defaults[0].type = Tab 

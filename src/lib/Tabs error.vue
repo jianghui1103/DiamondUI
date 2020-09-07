@@ -4,7 +4,7 @@
         <div :class="{selected: t===selected}" class="Diamond-tabs-nav-item" v-for="(t,index) in title" @click="checkSelected(t)" :key="index">{{t}}</div>
     </div>
     <div class="Diamond-tabs-content">
-        <component class="Diamond-tabs-content-item" v-for="(c,index) in defaults" :key="index" :is="c" :class="{selected: c.props.title === selected}" />
+        <component class="Diamond-tabs-content-item" v-for="(c,index) in defaults" :key="index" :is="current" />
     </div>
 </div>
 </template>
@@ -29,11 +29,14 @@ export default {
             return tag.props.title
         })
         const current = defaults.filter((tag) => {
+            console.log(tag.props.title === props.selected)
             return tag.props.title === props.selected
         })[0]
+
         const checkSelected = (t) => {
             context.emit('update:selected', t)
         }
+
         return {
             defaults,
             title,
@@ -72,14 +75,6 @@ $border-color: #d9d9d9;
 
     &-content {
         padding: 8px 0;
-
-        &-item {
-            display: none;
-
-            &.selected {
-                display: block;
-            }
-        }
     }
 }
 </style>
