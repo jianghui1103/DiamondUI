@@ -4,7 +4,7 @@
         <div :class="{selected: t===selected}" class="Diamond-tabs-nav-item" v-for="(t,index) in title" @click="checkSelected(t)" :key="index">{{t}}</div>
     </div>
     <div class="Diamond-tabs-content">
-        <component class="Diamond-tabs-content-item" v-for="(c,index) in defaults" :key="index" :is="current" />
+        <component class="Diamond-tabs-content-item" :is="current" :key="current.props.title" />
     </div>
 </div>
 </template>
@@ -19,7 +19,6 @@ export default {
     },
     setup(props, context) {
         const defaults = context.slots.default()
-        console.log(defaults)
         defaults.forEach((tag) => {
             if (tag.type !== Tab) {
                 throw new Error('节点类型错误')

@@ -13,14 +13,15 @@
 <script lang="ts">
 import Tab from './Tab.vue'
 import {
+    computed,
     ref,
-    onMounted,
-    watchEffect
-} from 'vue';
+    watchEffect,
+    onMounted
+} from 'vue'
 export default {
     props: {
         selected: {
-            type: String,
+            type: String
         }
     },
     setup(props, context) {
@@ -46,28 +47,28 @@ export default {
         const defaults = context.slots.default()
         defaults.forEach((tag) => {
             if (tag.type !== Tab) {
-                throw new Error('节点类型错误')
+                throw new Error('Tabs 子标签必须是 Tab')
             }
         })
-        const title = defaults.map((tag) => {
+        const current = computed(() => {
+            return defaults.find(tag => tag.props.title === props.selected)
+        })
+        const titles = defaults.map((tag) => {
             return tag.props.title
         })
-        const current = defaults.filter((tag) => {
-            return tag.props.title === props.selected
-        })[0]
-        const checkSelected = (t) => {
-            context.emit('update:selected', t)
+        const select = (title: string) => {
+            context.emit('update:selected', title)
         }
         return {
-            defaults,
-            title,
             current,
-            checkSelected,
+            defaults,
+            titles,
+            select,
             selectedItem,
             indicator,
             container
         }
-    },
+    }
 }
 </script>
 
