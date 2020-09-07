@@ -1,7 +1,7 @@
 <template>
 <div class="Diamond-tabs">
     <div class="Diamond-tabs-nav" ref="container">
-        <div :class="{selected: t===selected}" class="Diamond-tabs-nav-item" v-for="(t,index) in title" @click="checkSelected(t)" :key="index" :ref="el => {if(el) navItems[index]=el}">{{t}}</div>
+        <div :class="{selected: t===selected}" class="Diamond-tabs-nav-item" v-for="(t,index) in title" @click="checkSelected(t)" :key="index" :ref="el => {if(t === selected) selectedItem=el}">{{t}}</div>
         <div class="Diamond-tabs-nav-indicator" ref="indicator"></div>
     </div>
     <div class="Diamond-tabs-content">
@@ -28,22 +28,20 @@ export default {
         }
     },
     setup(props, context) {
-        const navItems = ref < HTMLDivElement[] > ([])
+        const selectedItem = ref < HTMLDivElement > (null)
         const indicator = ref < HTMLDivElement > (null)
         const container = ref < HTMLDivElement > (null)
         const changeIndicator = () => {
-            const divs = navItems.value
-            const result = divs.filter(div => div.classList.contains('selected'))[0]
             const {
                 width
-            } = result.getBoundingClientRect()
+            } = selectedItem.value.getBoundingClientRect()
             indicator.value.style.width = width + 'px'
             const {
                 left: left1
             } = container.value.getBoundingClientRect()
             const {
                 left: left2
-            } = result.getBoundingClientRect()
+            } = selectedItem.value.getBoundingClientRect()
             const left = left2 - left1
             indicator.value.style.left = left + 'px'
         }
@@ -69,7 +67,7 @@ export default {
             title,
             current,
             checkSelected,
-            navItems,
+            selectedItem,
             indicator,
             container
         }
