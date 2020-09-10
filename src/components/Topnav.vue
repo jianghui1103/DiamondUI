@@ -1,11 +1,20 @@
 <template>
 <div class="topnav">
-    <div class="logo">LOGO</div>
+    <div class="logo">
+        <router-link to="/">
+            <svg class="icon">
+                <use xlink:href="#icon-Diamond"></use>
+            </svg>
+        </router-link>
+    </div>
     <ul class="menu">
-        <li>菜单1</li>
-        <li>菜单2</li>
+        <li>文档</li>
     </ul>
-    <span class="toggleAside" @click="toggleMenu"></span>
+    <span v-if="menuShow" class="toggleAside" @click="toggleMenu">
+        <svg class="icon">
+            <use xlink:href="#icon-caidan"></use>
+        </svg>
+    </span>
 </div>
 </template>
 
@@ -15,6 +24,12 @@ import {
     Ref
 } from 'vue';
 export default {
+    props: {
+        menuShow: {
+            type: Boolean,
+            default: false
+        }
+    },
     setup() {
         const menuVisible = inject < Ref < boolean > > ('menuVisible') // get
         const toggleMenu = () => {
@@ -30,7 +45,6 @@ export default {
 
 <style lang="scss" scoped>
 .topnav {
-    background: pink;
     display: flex;
     padding: 16px;
     position: fixed;
@@ -44,12 +58,18 @@ export default {
     >.logo {
         max-width: 6em;
         margin-right: auto;
+
+        >a .icon {
+            width: 30px;
+            height: 30px;
+        }
     }
 
     >.menu {
         display: flex;
         white-space: nowrap;
         flex-wrap: nowrap;
+        color: #1d2c40;
 
         >li {
             margin: 0 1em;
@@ -60,12 +80,16 @@ export default {
         display: inline-block;
         width: 24px;
         height: 24px;
-        background: red;
         position: absolute;
         left: 16px;
         top: 50%;
         transform: translateY(-50%);
         display: none;
+
+        >svg {
+            width: 30px;
+            height: 30px;
+        }
     }
 
     @media (max-width: 500px) {
