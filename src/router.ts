@@ -7,6 +7,8 @@ import DialogDemo from './components/DialogDemo.vue'
 import TabsDemo from './components/TabsDemo.vue'
 import DocDemo from './components/DocDemo.vue'
 import Markdown from './components/Markdown.vue'
+import LinkDemo from './components/LinkDemo.vue'
+
 import { h } from 'vue'
 const md = filename =>  h(Markdown,{path: `../markdown/${filename}.md`,key: filename})
 
@@ -24,6 +26,7 @@ export const router = createRouter({
             {path: 'button', component: ButtonDemo},
             {path: 'dialog', component: DialogDemo},
             {path: 'tabs', component: TabsDemo},
+            {path: 'link', component: LinkDemo},
         ]},
     ]
 })
