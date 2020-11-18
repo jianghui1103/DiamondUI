@@ -15,7 +15,8 @@ import Tab from './Tab.vue'
 import {
     ref,
     onMounted,
-    watchEffect
+    watchEffect,
+    computed
 } from 'vue';
 export default {
     props: {
@@ -52,9 +53,13 @@ export default {
         const title = defaults.map((tag) => {
             return tag.props.title
         })
-        const current = defaults.filter((tag) => {
-            return tag.props.title === props.selected
-        })[0]
+        // const current = defaults.filter((tag) => {
+        //     return tag.props.title === props.selected
+        // })[0]
+        const current = computed(()=> {
+            return defaults.filter(tag => { return tag.props.title === props.selected})[0]
+            // 相同 return defaults.filter(tag => tag.props.title === props.selected)[0]
+        });
         const checkSelected = (t) => {
             context.emit('update:selected', t)
         }
