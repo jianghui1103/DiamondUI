@@ -1,8 +1,8 @@
 <template>
-    <label class="Diamond-radio is-checked" role="radio" >
-        <span class="Diamond-radio__input is-checked">
+    <label class="Diamond-radio" role="radio" :class="{'is-checked': classes}">
+        <span class="Diamond-radio__input" :class="{'is-checked': classes}" >
             <span class="Diamond-radio__inner"></span>
-            <input class="Diamond-radio__original" type="radio" >
+            <input class="Diamond-radio__original" type="radio" :value="label"  @input="updataInp">
         </span>
         <span class="Diamond-radio__label">
             <slot />    
@@ -11,14 +11,26 @@
 </template>
 
 <script lang="ts">
-
+import { computed, nextTick } from 'vue'
 export default {
     props: {
-
+        value: String || Number || Boolean,
+        label: String || Number || Boolean
     },
-    setup() {
-
-    },
+    setup(props,context) {
+11      
+        const { value,label } = props
+        const classes = value === label
+        const updataInp = async (e)=>{
+            await nextTick()
+            console.log(e.target.defaultValue)
+            context.emit('update:value', e.target.defaultValue) // 触发父元素的input 事件 
+        }
+        return {
+            classes,
+            updataInp,
+        }
+    },  
 }
 </script>
 <style lang="scss">

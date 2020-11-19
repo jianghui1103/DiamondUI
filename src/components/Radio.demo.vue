@@ -16,7 +16,7 @@ export default {
     Radio
   },
   setup() {
-    const radio = ref('1')
+    const radio = ref('2')
     return {
       radio
     }
