@@ -1,5 +1,5 @@
 <demo>
-常规使用
+禁用链接
 </demo>
 <template>
 <div>

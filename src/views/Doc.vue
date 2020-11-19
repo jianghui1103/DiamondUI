@@ -33,6 +33,9 @@
                 <li>
                     <router-link to="/doc/link">Link 文字链接</router-link>
                 </li>
+                <li>
+                    <router-link to="/doc/radio">Radio 单选框</router-link>
+                </li>
             </ol>
         </aside>
         <main>

@@ -13,11 +13,7 @@ import Link2Demo from './Link2.demo.vue'
 export default {
     components: { Demo },
     setup() {
-        const onClick = ()=> {
-            console.log('hi');
-        }
         return {
-            onClick,
             Link1Demo,
             Link2Demo,
         }
