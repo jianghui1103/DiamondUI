@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { computed, nextTick, ref } from 'vue'
+import { computed, nextTick, ref, getCurrentInstance } from 'vue'
 export default {
     props: {
         value: String || Number || Boolean,
@@ -23,6 +23,7 @@ export default {
     },
     setup(props,context) {
         const { value,label } = props;
+        const { radioGroup } = useCheckGroup()
         const updataInp = async (e)=>{
             await nextTick()
             context.emit('change',e.target.defaultValue)
@@ -32,6 +33,23 @@ export default {
             updataInp,
         }
     },  
+}
+function useCheckGroup() {
+    let { parent } = getCurrentInstance()
+    while(parent) {
+        console.log(parent.type.name)
+        if(parent.type.name !== 'RadioGroup') {
+            parent = parent.parent
+        } else {
+            return {
+                radioGroup: parent
+            }
+        }
+    }
+    return {
+        radioGroup: null
+    }
+    
 }
 </script>
 <style lang="scss">
