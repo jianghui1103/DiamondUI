@@ -1,10 +1,10 @@
 <demo>
-Radio 单选框
+禁选状态
 </demo>
 <template>
 <div>
-  <Radio v-model:value="radio" label="1" @change="radioChange">备选1</Radio>
-  <Radio v-model:value="radio" label="2" @change="radioChange">备选项2</Radio>
+  <Radio v-model:value="radio" label="1" disabled>备选1</Radio>
+  <Radio v-model:value="radio" label="2" disabled>备选项2</Radio>
 </div>
 </template>
 
@@ -17,12 +17,8 @@ export default {
   },
   setup() {
     const radio = ref('2')
-    const radioChange = (data)=> {
-      console.log(data)
-    }
     return {
       radio,
-      radioChange
     }
   }
 }

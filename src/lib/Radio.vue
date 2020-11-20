@@ -1,8 +1,8 @@
 <template>
-    <label class="Diamond-radio" role="radio" :class="{'is-checked': value === label}">
-        <span class="Diamond-radio__input" :class="{'is-checked': value === label}" >
+    <label class="Diamond-radio" role="radio" :class="{'is-checked': value === label,'is-disabled':disabled}">
+        <span class="Diamond-radio__input" :class="{'is-checked': value === label,'is-disabled':disabled}" >
             <span class="Diamond-radio__inner"></span>
-            <input ref="radio" class="Diamond-radio__original" type="radio" :value="label"  @click="updataInp">
+            <input class="Diamond-radio__original" type="radio" :disabled="disabled" :value="label"  @click="updataInp">
         </span>
         <span class="Diamond-radio__label">
             <slot />    
@@ -15,18 +15,21 @@ import { computed, nextTick, ref } from 'vue'
 export default {
     props: {
         value: String || Number || Boolean,
-        label: String || Number || Boolean
+        label: String || Number || Boolean,
+        disabled: {
+            type:Boolean,
+            default: false
+        },
     },
     setup(props,context) {
         const { value,label } = props;
-        const radio = ref()
         const updataInp = async (e)=>{
             await nextTick()
+            context.emit('change',e.target.defaultValue)
             context.emit('update:value', e.target.defaultValue) // 触发父元素的input 事件 
         }
         return {
             updataInp,
-            radio
         }
     },  
 }
@@ -69,6 +72,14 @@ export default {
     }
     &.is-checked + .Diamond-radio__label {
         color: #409EFF;
+    }
+    &.is-disabled .Diamond-radio__inner {
+        border-color: #E4E7ED;
+        background: #F5F7FA;
+    }
+    &.is-disabled + .Diamond-radio__label {
+        color: #C0C4CC;
+        cursor: not-allowed;
     }
     white-space: nowrap;
     cursor: pointer;
