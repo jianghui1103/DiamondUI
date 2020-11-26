@@ -1,5 +1,5 @@
 <demo>
-禁选状态
+选项组
 </demo>
 <template>
 <div>
