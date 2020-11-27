@@ -9,6 +9,7 @@ import DocDemo from './components/DocDemo.vue'
 import Markdown from './components/Markdown.vue'
 import LinkDemo from './components/LinkDemo.vue'
 import RadioDemo from './components/RadioDemo.vue'
+import CheckboxDemo from './components/CheckboxDemo.vue'
 
 import { h } from 'vue'
 const md = filename =>  h(Markdown,{path: `../markdown/${filename}.md`,key: filename})
@@ -29,6 +30,7 @@ export const router = createRouter({
             {path: 'tabs', component: TabsDemo},
             {path: 'link', component: LinkDemo},
             {path: 'radio', component: RadioDemo},
+            {path: 'checkbox', component: CheckboxDemo},
         ]},
     ]
 })

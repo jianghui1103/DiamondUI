@@ -21,7 +21,7 @@ export default {
     RadioGroup
   },
   setup() {
-    const radio = ref('2')
+    const radio = ref('1')
     return {
       radio,
     }

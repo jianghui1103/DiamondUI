@@ -36,6 +36,9 @@
                 <li>
                     <router-link to="/doc/radio">Radio 单选框</router-link>
                 </li>
+                <li>
+                    <router-link to="/doc/checkBox">CheckBox 多选框</router-link>
+                </li>
             </ol>
         </aside>
         <main>
