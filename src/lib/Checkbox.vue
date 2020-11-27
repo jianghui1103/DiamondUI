@@ -1,63 +1,17 @@
 <template>
-    <label class="Diamond-radio" role="radio" :class="{'is-checked': radioVlue === label,'is-disabled':disabled}">
-        <span class="Diamond-radio__input" :class="{'is-checked': radioVlue === label,'is-disabled':disabled}" >
-            <span class="Diamond-radio__inner"></span>
-            <input class="Diamond-radio__original" type="radio" :disabled="disabled" :radioVlue="label"  @click="updataInp">
+    <label class="Diamond-checkbox" role="checkbox" >
+        <span>
+            <span class="Diamond-checkbox__input" role="false" >
+                <span class="Diamond-checkbox__inner"></span>
+                <input class="Diamond-checkbox__original" type="checkbox" value="false" />
+            </span>
         </span>
-        <span class="Diamond-radio__label">
-            <slot />    
+        <span class="Diamond-checkbox__label">
+            <slot />
         </span>
     </label>
 </template>
 
-<script lang="ts">
-import { computed, nextTick, ref, getCurrentInstance } from 'vue'
-export default {
-    props: {
-        value: String || Number || Boolean,
-        label: String || Number || Boolean,
-        disabled: {
-            type:Boolean,
-            default: false
-        },
-    },
-    setup(props,context) {
-        const { value,label } = props;
-        let radioVlue = value
-        const { radioGroup } = useCheckGroup()
-        if(radioGroup) {
-            radioVlue = radioGroup.ctx.value
-        }
-        const updataInp = async (e)=>{
-            await nextTick()
-            radioGroup && console.log(radioGroup.proxy.value)
-            context.emit('change',e.target.defaultValue)
-            context.emit('update:value', e.target.defaultValue) // 触发父元素的input 事件 
-            radioGroup && radioGroup.emit('change',e.target.defaultValue)
-        }
-        return {
-            updataInp,
-            radioVlue
-        }
-    },  
-}
-
-function useCheckGroup() {
-    let { parent } = getCurrentInstance()
-    while(parent) {
-        if(parent.type.name !== 'RadioGroup') {
-            parent = parent.parent
-        } else {
-            return {
-                radioGroup: parent
-            }
-        }
-    }
-    return {
-        radioGroup: null
-    }
-}
-</script>
 <style lang="scss">
 .Diamond-radio {
     color: #606266;

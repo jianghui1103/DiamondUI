@@ -1,29 +1,13 @@
 <demo>
-Radio 单选框
+基础用法
 </demo>
 <template>
 <div>
-  <Radio v-model:value="radio" label="1" @change="radioChange">备选1</Radio>
-  <Radio v-model:value="radio" label="2" @change="radioChange">备选项2</Radio>
+  <Checkbox v-model:value="checked" >备选项</Checkbox>
 </div>
 </template>
 
-<script lang="ts">
-import { ref, computed } from 'vue'
-import Radio from "../lib/Radio.vue";
-export default {
-  components: {
-    Radio
-  },
-  setup() {
-    const radio = ref('2')
-    const radioChange = (data)=> {
-      console.log(data)
-    }
-    return {
-      radio,
-      radioChange
-    }
-  }
-}
+<script setup>
+ref: checked=true;
 </script>
+
