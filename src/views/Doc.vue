@@ -39,6 +39,12 @@
                 <li>
                     <router-link to="/doc/checkBox">CheckBox 多选框</router-link>
                 </li>
+                <li>
+                    <router-link to="/doc/loading">Loading 加载</router-link>
+                </li>
+                <li>
+                    <router-link to="/doc/checkBox">CheckBox 多选框</router-link>
+                </li>
             </ol>
         </aside>
         <main>
