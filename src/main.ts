@@ -5,8 +5,11 @@ import App from './App.vue'
 import { router } from './router'
 import 'github-markdown-css'
 import Markdown from './components/Markdown.vue';
+import { directive } from './lib/Loading/directive'
 
 const app = createApp(App)
 app.use(router)
 app.mount('#app')
 app.component("Markdown",Markdown)
+
+app.directive('loading',directive)
