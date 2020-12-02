@@ -3,15 +3,29 @@
 </demo>
 <template>
 <div>
-<Loading />
+  <Button @click="openFullScreen1"
+    v-loading.lock="fullscreenLoading">Loading</Button>
 </div>
 </template>
 
 <script lang="ts">
-import Loading from "../lib/Loading.vue";
+import Button from "../lib/Button.vue";
+import { ref } from 'vue'
 export default {
   components: {
-    Loading
+    Button
+  },
+  setup(){
+    let fullscreenLoading = ref(false);
+    function openFullScreen1() {
+      fullscreenLoading.value = true
+      setTimeout(() => {
+        fullscreenLoading.value = false
+      }, 2000)
+    }
+    return {
+      fullscreenLoading,openFullScreen1
+    }
   }
 }
 </script>

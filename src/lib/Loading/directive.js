@@ -1,33 +1,54 @@
 import Loading from './Loading.vue'
-import { h } from 'vue'
-function createComponent(Component,props) {
-    const vnode = h(Component,{...props});
+import { h, render, nextTick } from 'vue'
+
+function createComponent(component, props) {
+    const vnode = h(component,{...props})
+    const container = document.createElement('div');
     console.log(vnode)
+    render(vnode,container)
+    return vnode.component
+}
+
+function toggleLoading(el,binding) {
+    if(binding.value) {
+        nextTick(()=> {
+            let parentEl = document.body
+            el.instance.show();
+            parentEl.appendChild(el.mask)
+        })
+    } else {
+        el.instance.close();
+        // parentEl.removeChild(el.mask)
+    }
 }
 
 const loadingDirective = {
-    // Directive has a set of lifecycle hooks:
-    // called before bound element's parent component is mounted
-    beforeMount() {},
     // called when bound element's parent component is mounted
-    mounted() {
-        const options = {
-            
-        }
-        const mask = createComponent(Loading, {
-            ...options,
+    mounted(el, binding, vnode) {
+        const mask = createComponent(Loading,{
             onAfterLeave() {
-                console.log('关闭')
+                el.domVisible = false
+                console.log(el.domVisible,'关闭了')
             }
         })
+        el.instance = mask.ctx
+        el.mask = mask.ctx.$el
+        binding.value && toggleLoading(el, binding)
     },
-    // called before the containing component's VNode is updated
-    beforeUpdate() {},
+
     // called after the containing component's VNode and the VNodes of its children // have updated
-    updated() {},
-    // called before the bound element's parent component is unmounted
-    beforeUnmount() {},
-    // called when the bound element's parent component is unmounted
-    unmounted() {}
+    updated(el, binding) {
+        if(binding.oldValue !== binding.value) {
+            toggleLoading(el,binding)
+        }
+    },
+   
 }
+export default {
+    install(app) {
+      // if (Vue.prototype.$isServer) return
+      app.directive('loading', loadingDirective)
+    }
+  }
+  
 export const directive = loadingDirective

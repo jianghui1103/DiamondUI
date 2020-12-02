@@ -3,7 +3,7 @@
     <div
       v-show="visible"
       class="Diamond-loading-mask"
-      :class="[customClass, { 'is-fullscreen': fullscreen }]"
+      :class="[{ 'is-fullscreen': fullscreen }]"
     >
       <div class="Diamond-loading-spinner">
         <span class="Diamond-loadingIndicator"></span>
@@ -42,6 +42,7 @@ export default {
         }
         const close = () => {
             $data.visible = false
+            console.log($data.visible)
         }
         const setText = (text) => {
             $data.text = text
