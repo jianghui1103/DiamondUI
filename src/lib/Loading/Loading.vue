@@ -42,7 +42,6 @@ export default {
         }
         const close = () => {
             $data.visible = false
-            console.log($data.visible)
         }
         const setText = (text) => {
             $data.text = text
