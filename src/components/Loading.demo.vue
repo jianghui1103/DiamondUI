@@ -18,6 +18,7 @@ export default {
     Button
   },
   setup(){
+    
     let fullscreenLoading = ref(false);
     let $loading = useLoading()
 
@@ -28,7 +29,10 @@ export default {
       }, 2000)
     }
     function openFullScreen2() {
-      $loading()
+      const loading = $loading()
+      setTimeout(() => {
+          loading.close()
+      }, 2000)
     }
     return {
       fullscreenLoading,openFullScreen1,openFullScreen2
