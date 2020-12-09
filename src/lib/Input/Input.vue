@@ -1,8 +1,10 @@
 <template>
     <input
         class="Diamond-input"
+        :class="classes"
         :placeholder="placeholder"
         :type="type"
+        :disabled="disabled"
     >
 </template>
 
@@ -28,12 +30,10 @@ export default {
         }
     },
     setup(props) {
-      const { theme,size,level } = props;
+      const { disabled } = props;
       const classes = computed(()=>{
         return {
-            [`Diamond-theme-${theme}`] : theme,
-            [`Diamond-size-${size}`] : size,
-            [`Diamond-level-${level}`] : level,
+            [`Diamond-input-disabled`] : disabled,
           }
       })
       return {classes}
@@ -64,12 +64,15 @@ $grey: grey;
   border-radius: $radius;
   box-shadow: 0 1px 0 fade-out(black, 0.95);
   transition: background 250ms;
-  & + & {
-    margin-left: 8px;
-  }
   &:hover,
   &:focus {
     border-color: $blue;
+  }
+  &.Diamond-input-disabled {
+    &:hover,
+    &:focus {
+        border-color: $border-color;
+    }
   }
   &:focus {
     outline: none;
