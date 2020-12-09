@@ -1,9 +1,9 @@
 <demo>
-常规使用
+禁用用法
 </demo>
 <template>
 <div>
-    <DInput v-model="input" placeholder="输入框"> </DInput>
+    <DInput v-model="input" :disabled="true"> </DInput>
 </div>
 </template>
 

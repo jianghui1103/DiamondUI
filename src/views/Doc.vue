@@ -37,13 +37,13 @@
                     <router-link to="/doc/radio">Radio 单选框</router-link>
                 </li>
                 <li>
-                    <router-link to="/doc/checkBox">CheckBox 多选框</router-link>
+                    <router-link to="/doc/checkBox">CheckBox</router-link>
                 </li>
                 <li>
                     <router-link to="/doc/loading">Loading 加载</router-link>
                 </li>
                 <li>
-                    <router-link to="/doc/checkBox">CheckBox 多选框</router-link>
+                    <router-link to="/doc/input">Input 输入框</router-link>
                 </li>
             </ol>
         </aside>

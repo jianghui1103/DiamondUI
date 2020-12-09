@@ -11,7 +11,7 @@ import LinkDemo from './components/LinkDemo.vue'
 import RadioDemo from './components/RadioDemo.vue'
 import CheckboxDemo from './components/CheckboxDemo.vue'
 import LoadingDemo from './components/LoadingDemo.vue'
-import InputDemo from './components/InputDemo.vue'
+import InputDemo from './components/InputDemo/InputDemo.vue'
 
 import { h } from 'vue'
 const md = filename =>  h(Markdown,{path: `../markdown/${filename}.md`,key: filename})
