@@ -6,9 +6,10 @@
         :placeholder="placeholder"
         :type="type"
         :disabled="disabled"
+        @input="handleInput"
     />
     <!-- 后置文件 -->
-    <span class="Diamond-input__suffix" v-if="clearable">
+    <span class="Diamond-input__suffix" v-if="clearable" @click="handleClick">
       <span class="Diamond-input__suffix-inner">
         <img src="../../icons/clear.svg" alt="" srcset="" class="icons">
       </span>
@@ -17,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue';
+import { computed, watchEffect, ref } from 'vue';
 export default {
     props: {
         placeholder: {
@@ -35,16 +36,33 @@ export default {
         clearable: {
           type: Boolean,
           default: false
+        },
+        value: {
+          type: String || Number,
+          default: ''
         }
     },
-    setup(props) {
-      const { disabled } = props;
+    setup(props,context) {
+      const { disabled,value } = props;
       const classes = computed(()=>{
         return {
             [`Diamond-input-disabled`] : disabled,
           }
       })
-      return {classes}
+      
+       const handleInput = (event) => {
+         console.log(event)
+          context.emit('input', event.target.value)
+          context.emit('update:modelValue', event.target.value)
+      }
+      const handleClick = ()=> {
+        context.emit('update:modelValue', '')
+        context.emit('input', '')
+        context.emit('change', '')
+      }
+
+
+      return {classes,handleInput,handleClick}
     }
 }
 </script>
@@ -63,21 +81,20 @@ $grey: grey;
   display: inline-block;
   width: 100%;
   .Diamond-input__inner {
+    background-color: #FFFFFF;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #DCDFE6;
     box-sizing: border-box;
-    height: $h;
-    padding: 0 12px;
-    cursor: pointer;
-    display: inline-flex;
+    color: #606266;
+    display: inline-block;
+    font-size: inherit;
+    height: 40px;
+    line-height: 40px;
+    outline: none;
+    padding: 0 15px;
+    transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
     width: 100%;
-    justify-content: center;
-    align-items: center;
-    white-space: nowrap;
-    background: white;
-    color: $color;
-    border: 1px solid $border-color;
-    border-radius: $radius;
-    box-shadow: 0 1px 0 fade-out(black, 0.95);
-    transition: background 250ms;
     &:hover,
     &:focus {
       border-color: $blue;
@@ -90,21 +107,26 @@ $grey: grey;
     }
   }
   .Diamond-input__suffix{
-    position: absolute;
+    position:absolute;
+    height:100%;
+    right:5px;
+    top:0;
+    text-align:center;
+    color:#c0c4cc;
+    transition:all .3s;
+    pointer-events:none;
+    & .Diamond-input__suffix-inner{
+      width: 100%;
       height: 100%;
-      right: 5px;
-      top: 0;
-      text-align: center;
-      transition: all .3s;
-      pointer-events: none;
+      pointer-events: all;
+    }
   }
 }
 .Diamond-input{
   width: 140px;
 }
 .icons{
-  width: 2em;
-  height: 2em;
+  height: 100%;
 }
 
 </style>
