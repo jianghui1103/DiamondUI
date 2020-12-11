@@ -7,13 +7,10 @@
         :type="type"
         :disabled="disabled"
     />
-    <span class="Diamond-input__suffix" >
+    <!-- 后置文件 -->
+    <span class="Diamond-input__suffix" v-if="clearable">
       <span class="Diamond-input__suffix-inner">
-        <svg>
-          <use xlinkHref=''></use>
-        </svg>
-        
-
+        <img src="../../icons/clear.svg" alt="" srcset="" class="icons">
       </span>
     </span>
   </div>
@@ -21,7 +18,6 @@
 
 <script lang="ts">
 import { computed } from 'vue';
-import clear from '../../icons/clear.svg'
 export default {
     props: {
         placeholder: {
@@ -42,7 +38,6 @@ export default {
         }
     },
     setup(props) {
-      console.log(clear)
       const { disabled } = props;
       const classes = computed(()=>{
         return {
@@ -73,6 +68,7 @@ $grey: grey;
     padding: 0 12px;
     cursor: pointer;
     display: inline-flex;
+    width: 100%;
     justify-content: center;
     align-items: center;
     white-space: nowrap;
@@ -93,6 +89,22 @@ $grey: grey;
       }
     }
   }
+  .Diamond-input__suffix{
+    position: absolute;
+      height: 100%;
+      right: 5px;
+      top: 0;
+      text-align: center;
+      transition: all .3s;
+      pointer-events: none;
+  }
+}
+.Diamond-input{
+  width: 140px;
+}
+.icons{
+  width: 2em;
+  height: 2em;
 }
 
 </style>
