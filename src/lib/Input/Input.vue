@@ -7,6 +7,7 @@
         :type="showPassword ? (passwordVisible? 'text' : 'password') : 'text' "
         :disabled="disabled"
         @input="handleInput"
+        ref="input"
         :clearable="clearable"
     />
     <!-- 后置文件 -->
@@ -24,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { computed, watchEffect, ref } from 'vue';
+import { computed, watchEffect, ref, nextTick } from 'vue';
 export default {
     props: {
         placeholder: {
@@ -54,6 +55,7 @@ export default {
     },
     setup(props,context) {
       const { disabled,modelValue,showPassword } = props;
+      const input = ref(null)
       const classes = computed(()=>{
         return {
             [`Diamond-input-disabled`] : disabled,
@@ -61,14 +63,19 @@ export default {
       })
       // 事件
       const handleInput = (event) => {
-          context.emit('input', event.target.value)
-          context.emit('update:modelValue', event.target.value)
+        
+        context.emit('input', event.target.value)
+        context.emit('update:modelValue', event.target.value)
       }
       // 清除--未完成 
       const clear = ()=> {
+        nextTick(()=>{
+          input.value.value = ''
+        })
         context.emit('update:modelValue', '')
         context.emit('input', '')
         context.emit('change', '')
+        context.emit('clear')
       }
       // 密码显示隐藏
       let passwordVisible = ref(false)
@@ -76,7 +83,7 @@ export default {
         passwordVisible.value = !(passwordVisible.value)
       }
 
-      return {classes,handleInput,clear,handlePasswordVisible,passwordVisible}
+      return {classes,handleInput,clear,handlePasswordVisible,passwordVisible,input}
     }
 }
 </script>
