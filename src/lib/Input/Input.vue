@@ -63,7 +63,9 @@ export default {
       })
       // 事件
       const handleInput = (event) => {
-        
+        nextTick(()=>{
+          input.value.value = event.target.value
+        })
         context.emit('input', event.target.value)
         context.emit('update:modelValue', event.target.value)
       }

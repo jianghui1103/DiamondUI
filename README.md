@@ -93,3 +93,6 @@ defaults[0].type = Tab
 
 # 获取宽高位置
 const { width,height,top,left } = el.getBoundingClientRect() 
+
+# 通过ref 获取DOM元素
+给元素设置 ref='xxx' setup里声明一个xxx 的变量return, 在nextick里面就可以获取到这个DOM元素了

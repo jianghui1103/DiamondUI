@@ -3,7 +3,6 @@
 </demo>
 <template>
 <div>
-  {{input}}
   <DInput v-model:modelValue="input" placeholder="请输入内容" clearable > </DInput>
 </div>
 </template>
