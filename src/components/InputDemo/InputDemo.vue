@@ -4,6 +4,7 @@
     <Demo :component="InputDemo" />
     <Demo :component="InputDemo1" />
     <Demo :component="InputDemo2" />
+    <Demo :component="InputDemo3" />
 </div>
 </template>
 
@@ -12,13 +13,15 @@ import Demo from '../Demo.vue'
 import InputDemo from './Input.demo.vue'
 import InputDemo1 from './Input1.demo.vue'
 import InputDemo2 from './Input2.demo.vue'
+import InputDemo3 from './Input3.demo.vue'
 export default {
     components: { Demo },
     setup() {
         return {
             InputDemo,
             InputDemo1,
-            InputDemo2
+            InputDemo2,
+            InputDemo3
         }
     }
 }

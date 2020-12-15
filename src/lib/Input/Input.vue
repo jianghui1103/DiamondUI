@@ -4,12 +4,18 @@
         class="Diamond-input__inner"
         :class="classes"
         :placeholder="placeholder"
-        :type="type"
+        :type="showPassword ? (passwordVisible? 'text' : 'password') : 'text' "
         :disabled="disabled"
         @input="handleInput"
+        :clearable="clearable"
     />
     <!-- 后置文件 -->
-    <span class="Diamond-input__suffix" v-if="clearable" @click="handleClick">
+    <span class="Diamond-input__suffix" v-if="clearable" @click="clear">
+      <span class="Diamond-input__suffix-inner">
+        <img src="../../icons/clear.svg" alt="" srcset="" class="icons">
+      </span>
+    </span>
+    <span class="Diamond-input__suffix" v-if="showPassword" @click="handlePasswordVisible">
       <span class="Diamond-input__suffix-inner">
         <img src="../../icons/clear.svg" alt="" srcset="" class="icons">
       </span>
@@ -37,32 +43,40 @@ export default {
           type: Boolean,
           default: false
         },
-        value: {
+        modelValue: {
           type: String || Number,
           default: ''
+        },
+        showPassword: {
+          type: Boolean,
+          default: false
         }
     },
     setup(props,context) {
-      const { disabled,value } = props;
+      const { disabled,modelValue,showPassword } = props;
       const classes = computed(()=>{
         return {
             [`Diamond-input-disabled`] : disabled,
           }
       })
-      
-       const handleInput = (event) => {
-         console.log(event)
+      // 事件
+      const handleInput = (event) => {
           context.emit('input', event.target.value)
           context.emit('update:modelValue', event.target.value)
       }
-      const handleClick = ()=> {
+      // 清除--未完成 
+      const clear = ()=> {
         context.emit('update:modelValue', '')
         context.emit('input', '')
         context.emit('change', '')
       }
+      // 密码显示隐藏
+      let passwordVisible = ref(false)
+      const handlePasswordVisible = ()=> {
+        passwordVisible.value = !(passwordVisible.value)
+      }
 
-
-      return {classes,handleInput,handleClick}
+      return {classes,handleInput,clear,handlePasswordVisible,passwordVisible}
     }
 }
 </script>
