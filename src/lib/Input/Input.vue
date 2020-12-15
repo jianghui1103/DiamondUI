@@ -17,7 +17,7 @@
     </span>
     <span class="Diamond-input__suffix" v-if="showPassword" @click="handlePasswordVisible">
       <span class="Diamond-input__suffix-inner">
-        <img src="../../icons/clear.svg" alt="" srcset="" class="icons">
+        <img src="../../icons/show.svg" alt="" srcset="" class="icons">
       </span>
     </span>
   </div>
