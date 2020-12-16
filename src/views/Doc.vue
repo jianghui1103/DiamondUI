@@ -45,6 +45,9 @@
                 <li>
                     <router-link to="/doc/input">Input 输入框</router-link>
                 </li>
+                <li>
+                    <router-link to="/doc/inputNumber">Input Number</router-link>
+                </li>
             </ol>
         </aside>
         <main>
