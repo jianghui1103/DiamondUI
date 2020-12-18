@@ -55,6 +55,9 @@ export default {
     },
     setup(props,context) {
       const { disabled,modelValue,showPassword } = props;
+      nextTick(()=>{
+          input.value.value = modelValue
+      })
       const input = ref(null)
       const classes = computed(()=>{
         return {
