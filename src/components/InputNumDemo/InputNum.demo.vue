@@ -3,7 +3,7 @@
 </demo>
 <template>
 <div>
-    <input-num v-model="num" @change="handleChange" :min="1" :max="10" > </input-num>
+    <input-num v-model:modelValue="num" @change="handleChange" :min="1" :max="10" > </input-num>
 </div>
 </template>
 
@@ -15,7 +15,7 @@ export default {
     InputNum
   },
   setup() {
-      const num = ref(1)
+      const num = ref(10)
       const handleChange = (value)=>{
         console.log(value);
       }

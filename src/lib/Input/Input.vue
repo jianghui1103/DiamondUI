@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { computed, watchEffect, ref, nextTick } from 'vue';
+import { computed, watchEffect, ref, nextTick, watch } from 'vue';
 export default {
     props: {
         placeholder: {
@@ -44,17 +44,20 @@ export default {
           type: Boolean,
           default: false
         },
-        modelValue: {
-          type: String || Number,
-          default: ''
-        },
+        modelValue: [String, Number],
         showPassword: {
           type: Boolean,
           default: false
         }
     },
+    watch: {
+        modelValue(newV,oldv) {
+          this.input.value = newV
+        }
+    },
     setup(props,context) {
       const { disabled,modelValue,showPassword } = props;
+      
       nextTick(()=>{
           input.value.value = modelValue
       })
