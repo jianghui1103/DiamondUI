@@ -1,0 +1,42 @@
+<demo>
+常规使用
+</demo>
+<template>
+<div>
+    <Diamond-select  v-model="value" placeholder="请选择">
+        <Diamond-option
+        v-for="item in options"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value">
+        </Diamond-option>
+    </Diamond-select> 
+</div>
+</template>
+
+<script lang="ts">
+import DiamondSelect from '../../lib/Select/Select.vue';
+import Vue, { ref, reactive, toRefs } from 'vue'
+export default {
+    components: {
+        DiamondSelect
+    },
+    setup() {
+        const value = ref('');
+        const data = reactive({
+            options: [{
+                value: '选项1',
+                label: '青菜'
+            },{
+                value: '选项2',
+                label: '双皮奶'
+            }]
+        })
+        return {
+            value,
+            ...toRefs(data)
+        };
+    }
+    
+}
+</script>
