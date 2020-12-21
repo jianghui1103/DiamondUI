@@ -13,7 +13,7 @@ import CheckboxDemo from './components/CheckboxDemo.vue'
 import LoadingDemo from './components/LoadingDemo.vue'
 import InputDemo from './components/InputDemo/InputDemo.vue'
 import InputNumDemo from './components/InputNumDemo/InputNumDemo.vue'
-
+import SelectDemo from './components/SelectDemo/SelectDemo.vue'
 import { h } from 'vue'
 const md = filename =>  h(Markdown,{path: `../markdown/${filename}.md`,key: filename})
 
@@ -37,6 +37,7 @@ export const router = createRouter({
             {path: 'loading', component: LoadingDemo},
             {path: 'input', component: InputDemo},
             {path: 'inputNumber', component: InputNumDemo},
+            {path: 'select', component: SelectDemo}
         ]},
     ]
 })

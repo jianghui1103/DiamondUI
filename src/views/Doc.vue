@@ -48,6 +48,9 @@
                 <li>
                     <router-link to="/doc/inputNumber">Input Number</router-link>
                 </li>
+                <li>
+                    <router-link to="/doc/select">Select 选择器</router-link>
+                </li>
             </ol>
         </aside>
         <main>
