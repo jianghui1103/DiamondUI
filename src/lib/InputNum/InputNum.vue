@@ -51,7 +51,6 @@ export default {
             inputValue.value -= step
             context.emit('change',inputValue.value)
         }
-
         return {
             inputValue,handleIncrease,handleDecrease
         }
@@ -59,18 +58,24 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.Diamond-input{
-    width: 100%; 
-    .Diamond-input__inner{
-        text-align:center
-    }
-}
+<style lang="scss" scoped>
+
 .Diamond-input-number {
     position: relative;
     display: inline-block;
     width: 180px;
     line-height: 38px;
+    ::v-deep .Diamond-input{
+        width: 100%; 
+        display: block;
+    }
+    ::v-deep .Diamond-input__inner{
+            text-align:center!important;
+    }
+}
+.Diamond-input >>> .Diamond-input__inner{
+            text-align:center!important;
+
 }
 .Diamond-input-number__increase, .Diamond-input-number__decrease{
     &.is-disabled{
