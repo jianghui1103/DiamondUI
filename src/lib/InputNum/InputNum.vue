@@ -1,12 +1,12 @@
 <template>
 <div class="Diamond-input-number">
-    <span class="Diamond-input-number__increase" @click="handleIncrease">
+    <span class="Diamond-input-number__increase" :class="[{'is-disabled': max <= inputValue || disabled }]" @click="handleIncrease">
         +
     </span>
-    <span class="Diamond-input-number__decrease" @click="handleDecrease">
+    <span class="Diamond-input-number__decrease" :class="[{'is-disabled': min >= inputValue || disabled }]"  @click="handleDecrease">
         -
     </span>
-    <DInput v-model:modelValue="inputValue" @input="handleChange" placeholder="密码框" />
+    <DInput v-model:modelValue="inputValue" :disabled="disabled" placeholder="密码框" />
 </div>
 </template>
 
@@ -22,26 +22,38 @@ export default {
             type: Number,
             default:1
         },
-
+        min: Number,
+        max: Number,
+        step: {
+            type: Number,
+            default: 1
+        },
+        disabled: {
+            type: Boolean,
+            default: false
+        }
     },
     setup(props,context) {
-        const { modelValue } = props;
+        const { modelValue,min,max,step,disabled } = props;
         let inputValue = ref(1)
         inputValue.value = modelValue
-
-        const handleChange = (event)=> {
-            console.log('evenet target value',event.target.value)
-            context.emit('change',event.target.value)
-        }
         const handleIncrease = ()=> {
-            inputValue.value += 1
+            if(max <= inputValue.value || disabled ) {
+                return false;
+            }
+            inputValue.value += step
+            context.emit('change',inputValue.value)
         }
         const handleDecrease = ()=> {
-            inputValue.value -= 1
+            if(min >= inputValue.value || disabled ) {
+                return false;
+            }
+            inputValue.value -= step
+            context.emit('change',inputValue.value)
         }
 
         return {
-            inputValue,handleChange,handleIncrease,handleDecrease
+            inputValue,handleIncrease,handleDecrease
         }
     }
 }
@@ -61,6 +73,10 @@ export default {
     line-height: 38px;
 }
 .Diamond-input-number__increase, .Diamond-input-number__decrease{
+    &.is-disabled{
+        color: #C0C4CC;
+        cursor: not-allowed;
+    }
     position: absolute;
     z-index: 1;
     top: 1px;
