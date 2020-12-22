@@ -6,6 +6,7 @@
         :placeholder="placeholder"
         :type="showPassword ? (passwordVisible? 'text' : 'password') : 'text' "
         :disabled="disabled"
+        :readonly="readonly"
         @input="handleInput"
         ref="input"
         :clearable="clearable"
@@ -46,6 +47,10 @@ export default {
         },
         modelValue: [String, Number],
         showPassword: {
+          type: Boolean,
+          default: false
+        },
+        readonly: {
           type: Boolean,
           default: false
         }

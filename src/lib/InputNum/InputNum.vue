@@ -65,11 +65,11 @@ export default {
     display: inline-block;
     width: 180px;
     line-height: 38px;
-    ::v-deep .Diamond-input{
+    ::v-deep(.Diamond-input){
         width: 100%; 
         display: block;
     }
-    ::v-deep .Diamond-input__inner{
+    ::v-deep(.Diamond-input__inner){
             text-align:center!important;
     }
 }

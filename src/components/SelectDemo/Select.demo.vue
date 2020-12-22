@@ -3,7 +3,7 @@
 </demo>
 <template>
 <div>
-    <Diamond-select  v-model="value" placeholder="请选择">
+    <Diamond-select  v-model:modelValue="value" placeholder="请选择">
         <Diamond-option
         v-for="item in options"
         :key="item.value"
@@ -16,10 +16,11 @@
 
 <script lang="ts">
 import DiamondSelect from '../../lib/Select/Select.vue';
+import DiamondOption from '../../lib/Option/Option.vue'
 import Vue, { ref, reactive, toRefs } from 'vue'
 export default {
     components: {
-        DiamondSelect
+        DiamondSelect,DiamondOption
     },
     setup() {
         const value = ref('');
