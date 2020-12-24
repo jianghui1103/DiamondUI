@@ -61,5 +61,8 @@ export default {
 .Diamond-select{
     width: 140px;
     display: inline-block;
+    & ::v-deep .Diamond-input__inner{
+        cursor: pointer;
+    }
 }
 </style>

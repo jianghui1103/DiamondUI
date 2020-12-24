@@ -3,9 +3,10 @@
 class="Diamond-select-dropdown__item"
 @mouseenter="enter" @mouseleave="leave"
 :class="{
-    hover: hover
+    hover: hover && !disable,
+    'is-disabled': disable
 }"
-@click.stop="$parent.$parent.handlOptionClick(this)"
+@click.stop="!disable && $parent.$parent.handlOptionClick(this)"
 >
     <slot>
         <span>{{ label }}</span>
@@ -22,6 +23,7 @@ export default {
         },
         label: [String, Number],
         created: Boolean,
+        disable: Boolean
     },
     setup(props,context) {
         const data = reactive({
@@ -59,6 +61,10 @@ export default {
     cursor: pointer;
     &.hover{
         background: #F5F7FA;
+    }
+    &.is-disabled{
+        color: #C0C4CC;
+        cursor: not-allowed;
     }
 }
 </style>
