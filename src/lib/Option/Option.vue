@@ -1,17 +1,16 @@
 <template>
-<div>
-    <li 
-    class="Diamond-select-dropdown__item hover"
-    :class="{
-        hover: hover
-    }"
-    @click.stop="$parent.$parent.handlOptionClick(this)"
-    >
-        <slot>
-            <span>{{ label }}</span>
-        </slot>
-    </li>
-</div>
+<li 
+class="Diamond-select-dropdown__item"
+@mouseenter="enter" @mouseleave="leave"
+:class="{
+    hover: hover
+}"
+@click.stop="$parent.$parent.handlOptionClick(this)"
+>
+    <slot>
+        <span>{{ label }}</span>
+    </slot>
+</li>
 </template>
 
 <script lang="ts">
@@ -28,8 +27,16 @@ export default {
         const data = reactive({
             hover: false
         })
+        const enter = ()=> {
+            data.hover = true;
+        }
+        const leave = ()=> {
+            data.hover = false;
+        }
         return {
-            ...toRefs(data)
+            ...toRefs(data),
+            enter,
+            leave
         }
     }
 
@@ -50,5 +57,8 @@ export default {
     line-height: 34px;
     box-sizing: border-box;
     cursor: pointer;
+    &.hover{
+        background: #F5F7FA;
+    }
 }
 </style>
