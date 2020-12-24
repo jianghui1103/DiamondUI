@@ -23,7 +23,6 @@ function useMinWidth(select) {
         ()=>{console.log(select.inputWidth)},
         ()=>{
             minWidth.value = select.$el.getBoundingClientRect().width
-            console.log(minWidth)
         }
     )
     return minWidth

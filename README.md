@@ -100,3 +100,6 @@ const { width,height,top,left } = el.getBoundingClientRect()
 # 使用::v-deep来解决组件内样式修改
 
 # #provide / inject 
+
+# slot 执行父组件的事件
+不应该使用emit, 应该使用$parent

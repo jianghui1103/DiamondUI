@@ -24,7 +24,7 @@ export default {
     props: {
         modelValue:[ String || Number]
     },
-    setup(props) {
+    setup(props,context) {
         const { modelValue } = props
         const selectValue = ref(modelValue)
         const dropdown = ref < HTMLDivElement > (null);
@@ -34,6 +34,12 @@ export default {
         const toggle = ()=> {
             dropdownShow.value = !dropdownShow.value
         }
+        const handlOptionClick= (e)=> {
+            dropdownShow.value = false;
+            selectValue.value = e.label;
+            context.emit('update:modelValue',e.value)
+            context.emit('change',e.value)
+        }
         onMounted(()=>{
             watchEffect(()=>{
                 const { width,top,left,height } = inputEle.value.$el.getBoundingClientRect();
@@ -42,8 +48,9 @@ export default {
                 dropdown.value.$el.style.left = left + 'px';
             })
         })
+        
         return {
-            selectValue,dropdown,inputEle,dropdownShow,toggle
+            selectValue,dropdown,inputEle,dropdownShow,toggle,handlOptionClick
         }
     },
     

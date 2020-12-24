@@ -3,7 +3,7 @@
 </demo>
 <template>
 <div>
-    <Diamond-select  v-model:modelValue="value" placeholder="请选择">
+    <Diamond-select  v-model:modelValue="value" placeholder="请选择" @change="handleChange">
         <Diamond-option
         v-for="item in options"
         :key="item.value"
@@ -33,9 +33,13 @@ export default {
                 label: '双皮奶'
             }]
         })
+        const handleChange = (value)=>{
+            console.log(value)
+        }
         return {
             value,
-            ...toRefs(data)
+            ...toRefs(data),
+            handleChange
         };
     }
     

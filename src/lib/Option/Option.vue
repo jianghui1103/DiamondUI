@@ -5,6 +5,7 @@
     :class="{
         hover: hover
     }"
+    @click.stop="$parent.$parent.handlOptionClick(this)"
     >
         <slot>
             <span>{{ label }}</span>
@@ -23,7 +24,7 @@ export default {
         label: [String, Number],
         created: Boolean,
     },
-    setup() {
+    setup(props,context) {
         const data = reactive({
             hover: false
         })
@@ -31,7 +32,9 @@ export default {
             ...toRefs(data)
         }
     }
+
 }
+
 </script>
 
 <style lang="scss">
