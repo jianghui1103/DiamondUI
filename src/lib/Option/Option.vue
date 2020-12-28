@@ -4,18 +4,20 @@ class="Diamond-select-dropdown__item"
 @mouseenter="enter" @mouseleave="leave"
 :class="{
     hover: hover && !disable,
-    'is-disabled': disable
+    'is-disabled': disable,
+    'is-selected': itemSelected
 }"
-@click.stop="!disable && $parent.$parent.handlOptionClick(this)"
+@click.stop="handlOptionClick(this)"
 >
     <slot>
         <span>{{ label }}</span>
+        <p>{{itemSelected}}</p>
     </slot>
 </li>
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from 'vue'
+import { reactive, toRefs, computed, inject } from 'vue'
 export default {
     props: {
         value: {
@@ -27,18 +29,30 @@ export default {
     },
     setup(props,context) {
         const data = reactive({
-            hover: false
+            hover: false,
+            selected: false
         })
+        const select = inject('select')
         const enter = ()=> {
             data.hover = true;
         }
         const leave = ()=> {
             data.hover = false;
         }
+        const itemSelected = computed(() => {
+            return  select.selectValue === props.label
+        })
+
+        function handlOptionClick(e) {
+            data.selected = !data.selected
+            !props.disable && e.$parent.$parent.handlOptionClick(e)
+        }
         return {
             ...toRefs(data),
             enter,
-            leave
+            leave,
+            handlOptionClick,
+            itemSelected
         }
     }
 
@@ -65,6 +79,10 @@ export default {
     &.is-disabled{
         color: #C0C4CC;
         cursor: not-allowed;
+    }
+    &.is-selected {
+        color: #409eff;
+        background-color: #fff;
     }
 }
 </style>
