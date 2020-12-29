@@ -41,7 +41,8 @@ export default {
     props: {
         modelValue:[ String || Number || Array],
         clearable: Boolean,
-        multiple: Boolean
+        multiple: Boolean,
+        filterable: Boolean
     },
     setup(props,context) {
         const { modelValue,multiple } = props
