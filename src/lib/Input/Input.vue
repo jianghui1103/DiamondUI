@@ -8,6 +8,7 @@
         :disabled="disabled"
         :readonly="readonly"
         @input="handleInput"
+        @blur="handleBlur"
         ref="input"
         :clearable="clearable"
     />
@@ -80,6 +81,10 @@ export default {
         context.emit('input', event.target.value)
         context.emit('update:modelValue', event.target.value)
       }
+      // 失去焦点
+      const handleBlur = (event) => {
+        context.emit('blur', event.target.value)
+      }
       // 清除--未完成 
       const clear = ()=> {
         nextTick(()=>{
@@ -96,7 +101,7 @@ export default {
         passwordVisible.value = !(passwordVisible.value)
       }
 
-      return {classes,handleInput,clear,handlePasswordVisible,passwordVisible,input}
+      return {classes,handleInput,clear,handlePasswordVisible,passwordVisible,input,handleBlur}
     }
 }
 </script>

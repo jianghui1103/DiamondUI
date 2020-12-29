@@ -7,7 +7,7 @@ class="Diamond-select-dropdown__item"
     'is-disabled': disable,
     'is-selected': itemSelected
 }"
-@click.stop="handlOptionClick(this)"
+@click.stop="!disable && $parent.$parent.handlOptionClick(this)"
 >
     <slot>
         <span>{{ label }}</span>
@@ -40,18 +40,17 @@ export default {
             data.hover = false;
         }
         const itemSelected = computed(() => {
-            return  select.selectValue === props.label
+            if(!select.multiple) {
+                return  select.selectValue === props.label
+            } else {
+                return select.selectValue.indexOf(props.label) > -1
+            }   
         })
 
-        function handlOptionClick(e) {
-            data.selected = !data.selected
-            !props.disable && e.$parent.$parent.handlOptionClick(e)
-        }
         return {
             ...toRefs(data),
             enter,
             leave,
-            handlOptionClick,
             itemSelected
         }
     }

@@ -29,10 +29,15 @@ export default {
             options: [{
                 value: '选项1',
                 label: '青菜',
-                disable: true
             },{
                 value: '选项2',
                 label: '双皮奶'
+            },{
+                value: '选项3',
+                label: '橘子'
+            },{
+                value: '选项4',
+                label: '橙子'
             }],
             value: []
         })

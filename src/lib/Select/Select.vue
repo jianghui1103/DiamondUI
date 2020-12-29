@@ -1,28 +1,12 @@
 <template>
     <div class="Diamond-select">
-        <Diamond-input :class="{'is-multipe': multiple}"  v-model:modelValue="selectValue" :clearable="clearable" readonly :placeholder="multiple ? null : '请选择'" @click="toggle" ref="inputEle">
+        <Diamond-input :class="{'is-multipe': multiple}" @blur="handleBlur" v-model:modelValue="selectValue" :clearable="clearable" readonly :placeholder="multiple && selectValue.length > 0 ? null : '请选择'" @click="toggle" ref="inputEle">
         </Diamond-input>
         <div class="Diamond-select-tags-container">
             <div class="Diamond-select__tags" ref="tags" v-if="multiple" >
                 <span>
-                    <span class="Diamond-tag--info">
-                        <span class="Diamond-select__tags-text">111</span>
-                        <img src="../../icons/clear.svg" alt="" srcset="" class="icons">
-                    </span>
-                    <span class="Diamond-tag--info">
-                        <span class="Diamond-select__tags-text">111</span>
-                        <img src="../../icons/clear.svg" alt="" srcset="" class="icons">
-                    </span>
-                    <span class="Diamond-tag--info">
-                        <span class="Diamond-select__tags-text">111</span>
-                        <img src="../../icons/clear.svg" alt="" srcset="" class="icons">
-                    </span>
-                    <span class="Diamond-tag--info">
-                        <span class="Diamond-select__tags-text">111</span>
-                        <img src="../../icons/clear.svg" alt="" srcset="" class="icons">
-                    </span>
-                    <span class="Diamond-tag--info">
-                        <span class="Diamond-select__tags-text">111</span>
+                    <span class="Diamond-tag--info" v-for="(item,index) in selectValue" :key="index">
+                        <span class="Diamond-select__tags-text">{{item}}</span>
                         <img src="../../icons/clear.svg" alt="" srcset="" class="icons">
                     </span>
                 </span>
@@ -34,8 +18,8 @@
     </div>
 </template>
 
-<script lang="ts">
-import {ref, onMounted, watchEffect} from 'vue'
+<script lang="ts">  
+import {ref, onMounted, watchEffect, nextTick} from 'vue'
 import DiamondInput from '../Input/Input.vue'
 import DiamondSelectDropdown from './SelectDropdown.vue'
 export default {
@@ -53,8 +37,9 @@ export default {
         multiple: Boolean
     },
     setup(props,context) {
-        const { modelValue } = props
+        const { modelValue,multiple } = props
         const selectValue = ref(modelValue)
+        console.log(selectValue.value)
         const dropdown = ref < HTMLDivElement > (null);
         const inputEle = ref < HTMLDivElement > (null);
         const tags = ref < HTMLDivElement > (null);
@@ -64,14 +49,20 @@ export default {
             dropdownShow.value = !dropdownShow.value
         }
         const handlOptionClick= (e)=> {
-            // if() {
-
-            // } else {
+            if(multiple) {
+                let index = selectValue.value.indexOf(e.label);
+                index > -1 ? selectValue.value.splice(index,1) : selectValue.value.push(e.label)
+            } else {
+                console.log(e.label)
                 selectValue.value = e.label;
-            // }
-            dropdownShow.value = false;
+            }
             context.emit('update:modelValue',selectValue.value)
             context.emit('change',selectValue.value)
+        }
+        const handleBlur = (value)=> {
+            setTimeout(()=> {
+                dropdownShow.value = false;
+            },200)
         }
         onMounted(()=>{
             watchEffect(()=>{
@@ -91,7 +82,13 @@ export default {
             })
         })
         return {
-            selectValue,dropdown,inputEle,dropdownShow,toggle,handlOptionClick,tags
+            selectValue,
+            dropdown,inputEle,
+            dropdownShow,
+            toggle,
+            handlOptionClick,
+            tags,
+            handleBlur
         }
     },
     
