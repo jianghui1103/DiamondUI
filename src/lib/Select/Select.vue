@@ -1,17 +1,24 @@
 <template>
     <div class="Diamond-select">
-        <Diamond-input :class="{'is-multipe': multiple}" @blur="handleBlur" v-model:modelValue="selectValue" :clearable="clearable" readonly :placeholder="multiple && selectValue.length > 0 ? null : '请选择'" @click="toggle" ref="inputEle">
+        <Diamond-input 
+        :class="{'is-multipe': multiple}" 
+        @blur="handleBlur" 
+        v-model:modelValue="selectValue" 
+        :clearable="clearable" 
+        :placeholder="multiple && selectValue.length > 0 ? null : '请选择'" 
+        readonly 
+        @click="toggle" 
+        ref="inputEle"
+        >
         </Diamond-input>
-        <div class="Diamond-select-tags-container">
-            <div class="Diamond-select__tags" ref="tags" v-if="multiple" >
+            <div class="Diamond-select__tags" ref="tags" v-if="multiple" @click="toggle">
                 <span>
                     <span class="Diamond-tag--info" v-for="(item,index) in selectValue" :key="index">
                         <span class="Diamond-select__tags-text">{{item}}</span>
-                        <img src="../../icons/clear.svg" alt="" srcset="" class="icons">
+                        <img src="../../icons/clear.svg" alt="" srcset="" class="icons" @click.stop="deleteTags(index)">
                     </span>
                 </span>
             </div>
-        </div>
         <diamond-select-dropdown :width="width" ref="dropdown" v-show="dropdownShow">
             <slot/>
         </diamond-select-dropdown>
@@ -19,7 +26,7 @@
 </template>
 
 <script lang="ts">  
-import {ref, onMounted, watchEffect, nextTick} from 'vue'
+import {ref, onMounted, watchEffect, nextTick, watch} from 'vue'
 import DiamondInput from '../Input/Input.vue'
 import DiamondSelectDropdown from './SelectDropdown.vue'
 export default {
@@ -39,7 +46,6 @@ export default {
     setup(props,context) {
         const { modelValue,multiple } = props
         const selectValue = ref(modelValue)
-        console.log(selectValue.value)
         const dropdown = ref < HTMLDivElement > (null);
         const inputEle = ref < HTMLDivElement > (null);
         const tags = ref < HTMLDivElement > (null);
@@ -53,7 +59,6 @@ export default {
                 let index = selectValue.value.indexOf(e.label);
                 index > -1 ? selectValue.value.splice(index,1) : selectValue.value.push(e.label)
             } else {
-                console.log(e.label)
                 selectValue.value = e.label;
             }
             context.emit('update:modelValue',selectValue.value)
@@ -64,21 +69,28 @@ export default {
                 dropdownShow.value = false;
             },200)
         }
+        // 删除选择节点
+        const deleteTags = (index)=> {
+            selectValue.value.splice(index,1);
+        }
+        const setTagHeight = ()=> {
+            if(multiple) {
+                nextTick(()=> {
+                    const { height } = tags.value.getBoundingClientRect();
+                    inputEle.value.$el.children[0].style.height = height > 40 ? height + 'px' : '40px';
+                    dropdown.value.$el.style.top = inputEle.value.$el.children[0].style.height;
+                })
+            }
+        }
         onMounted(()=>{
             watchEffect(()=>{
                 const { width,top,left,height } = inputEle.value.$el.getBoundingClientRect();
+                // const srcollTop = document.body.scrollTop || document.documentElement.scrollTop;
                 dropdown.value.$el.style.minWidth = width + 'px';
-                dropdown.value.$el.style.top = top + height + 'px';
-                dropdown.value.$el.style.left = left + 'px';
-                // if(tags.value) {
-                //     tags.value.style.minWidth = width - 20 + 'px';
-                // }
-                // if(props.multiple) {
-                //     const { height } = tags.value.getBoundingClientRect();
-                //     inputEle.value.$el.children[0].style.height = height + 'px';
-                //     console.log(inputEle.value.$el.children[0])
-                //     console.log(height,'gaodu')
-                // }
+                dropdown.value.$el.style.top = height + 'px';
+                if(tags.value) {
+                    tags.value.style.minWidth = width - 20 + 'px';
+                }
             })
         })
         return {
@@ -88,10 +100,21 @@ export default {
             toggle,
             handlOptionClick,
             tags,
-            handleBlur
+            handleBlur,
+            setTagHeight,
+            deleteTags
         }
     },
-    
+    watch:{
+        modelValue: {
+    　　　　handler(newValue, oldValue) {
+                this.setTagHeight()
+            console.log(newValue)
+    　　　　},
+    　　　　deep: true
+    　　}
+
+    }
 }
 </script>
 
@@ -102,6 +125,7 @@ export default {
 .Diamond-select{
     width: 140px;
     display: inline-block;
+    position: relative;
     & ::v-deep .Diamond-input__inner{
         cursor: pointer;
     }
