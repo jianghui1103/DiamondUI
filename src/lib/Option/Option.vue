@@ -7,6 +7,7 @@ class="Diamond-select-dropdown__item"
     'is-disabled': disable,
     'is-selected': itemSelected
 }"
+v-show="visible"
 @click.stop="!disable && $parent.$parent.handlOptionClick(this)"
 >
     <slot>
@@ -30,7 +31,7 @@ export default {
     setup(props,context) {
         const data = reactive({
             hover: false,
-            selected: false
+            selected: false,
         })
         const select = inject('select')
         const enter = ()=> {
@@ -39,6 +40,10 @@ export default {
         const leave = ()=> {
             data.hover = false;
         }
+        const visible = computed(()=> {
+            if(!select.filterable) return true;
+            if(props.label.match(select.filterValue) !== null) return true
+        })
         const itemSelected = computed(() => {
             if(!select.multiple) {
                 return  select.selectValue === props.label
@@ -51,7 +56,8 @@ export default {
             ...toRefs(data),
             enter,
             leave,
-            itemSelected
+            itemSelected,
+            visible
         }
     }
 

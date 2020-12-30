@@ -79,6 +79,7 @@ export default {
           input.value.value = event.target.value
         })
         context.emit('input', event.target.value)
+        context.emit('change', event.target.value)
         context.emit('update:modelValue', event.target.value)
       }
       // 失去焦点

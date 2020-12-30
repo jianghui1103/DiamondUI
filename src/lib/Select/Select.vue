@@ -3,11 +3,13 @@
         <Diamond-input 
         :class="{'is-multipe': multiple}" 
         @blur="handleBlur" 
+        @click="toggle" 
+        @change="handleChange"
         v-model:modelValue="selectValue" 
         :clearable="clearable" 
         :placeholder="multiple && selectValue.length > 0 ? null : '请选择'" 
-        readonly 
-        @click="toggle" 
+        :readonly="readonly"
+
         ref="inputEle"
         >
         </Diamond-input>
@@ -26,7 +28,7 @@
 </template>
 
 <script lang="ts">  
-import {ref, onMounted, watchEffect, nextTick, watch} from 'vue'
+import {ref, onMounted, watchEffect, nextTick, watch, computed} from 'vue'
 import DiamondInput from '../Input/Input.vue'
 import DiamondSelectDropdown from './SelectDropdown.vue'
 export default {
@@ -45,13 +47,17 @@ export default {
         filterable: Boolean
     },
     setup(props,context) {
-        const { modelValue,multiple } = props
+        const { modelValue,multiple,filterable } = props
         const selectValue = ref(modelValue)
         const dropdown = ref < HTMLDivElement > (null);
         const inputEle = ref < HTMLDivElement > (null);
         const tags = ref < HTMLDivElement > (null);
         const dropdownShow = ref <Boolean> (false);
+        const filterValue = ref(null);
 
+        const readonly = computed(()=>{
+            return filterable ? false : true
+        })
         const toggle = ()=> {
             dropdownShow.value = !dropdownShow.value
         }
@@ -69,6 +75,9 @@ export default {
             setTimeout(()=> {
                 dropdownShow.value = false;
             },200)
+        }
+        const handleChange = (value)=> {
+            filterValue.value = value
         }
         // 删除选择节点
         const deleteTags = (index)=> {
@@ -103,14 +112,16 @@ export default {
             tags,
             handleBlur,
             setTagHeight,
-            deleteTags
+            deleteTags,
+            readonly,
+            handleChange,
+            filterValue
         }
     },
     watch:{
         modelValue: {
     　　　　handler(newValue, oldValue) {
                 this.setTagHeight()
-            console.log(newValue)
     　　　　},
     　　　　deep: true
     　　}
