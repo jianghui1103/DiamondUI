@@ -18,7 +18,6 @@ export default {
   setup() {
     const radio = ref('2')
     const radioChange = (data)=> {
-      console.log(data)
     }
     return {
       radio,

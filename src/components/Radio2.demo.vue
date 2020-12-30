@@ -3,7 +3,7 @@
 </demo>
 <template>
 <div>
-  <RadioGroup v-model:value="radio" >
+  <RadioGroup v-model:value="radio" @change="handleChange">
     <Radio label="1" >备选1</Radio>
     <Radio label="2" >备选项2</Radio>
     <Radio label="3" >备选项2</Radio>
@@ -22,8 +22,12 @@ export default {
   },
   setup() {
     const radio = ref('1')
+    const handleChange = (value)=>{
+      console.log(value)
+    }
     return {
       radio,
+      handleChange
     }
   }
 }

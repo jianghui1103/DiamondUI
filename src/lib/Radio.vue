@@ -2,7 +2,7 @@
     <label class="Diamond-radio" role="radio" :class="{'is-checked': radioVlue === label,'is-disabled':disabled}">
         <span class="Diamond-radio__input" :class="{'is-checked': radioVlue === label,'is-disabled':disabled}" >
             <span class="Diamond-radio__inner"></span>
-            <input class="Diamond-radio__original" type="radio" :disabled="disabled" :radioVlue="label"  @click="updataInp">
+            <input class="Diamond-radio__original" type="radio" :disabled="disabled" :value="label" v-model="radioVlue"  @click="updataInp(label)">
         </span>
         <span class="Diamond-radio__label">
             <slot />    
@@ -23,26 +23,34 @@ export default {
     },
     setup(props,context) {
         const { value,label } = props;
-        let radioVlue = value
+        const radio = ref <HTMLDivElement> (null)
         const { radioGroup } = useCheckGroup()
-        if(radioGroup) {
-            radioVlue = radioGroup.ctx.value
-        }
-        const updataInp = async (e)=>{
+
+        const radioVlue = computed(()=>{
+            if(radioGroup) {
+                return radioGroup.ctx.value
+            } else {
+                return props.value
+            }
+        })
+        const updataInp = async (lable)=>{
             await nextTick()
-            radioGroup && console.log(radioGroup.proxy.value)
-            context.emit('change',e.target.defaultValue)
-            context.emit('update:value', e.target.defaultValue) // 触发父元素的input 事件 
-            radioGroup && radioGroup.emit('change',e.target.defaultValue)
+            context.emit('change',lable)
+            context.emit('update:value', lable) // 触发父元素的input 事件 
+            if(radioGroup){
+                radioGroup.emit('change',lable)
+                radioGroup.emit('update:value',lable)
+            }
         }
         return {
             updataInp,
-            radioVlue
+            radioVlue,
+            radio
         }
     },  
 }
 
-function useCheckGroup() {
+function useCheckGroup() {  
     let { parent } = getCurrentInstance()
     while(parent) {
         if(parent.type.name !== 'RadioGroup') {
