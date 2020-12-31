@@ -7,7 +7,17 @@
 </div>
 </template>
 
-<script setup>
-ref: checked=true;
+<script lang="ts">
+import { ref, computed } from 'vue'
+import Checkbox from "../lib/Checkbox.vue";
+export default {
+  components: {
+    Checkbox
+  },
+  setup(){
+    const checked = ref(true)
+    return { checked }
+  }
+}
 </script>
 
