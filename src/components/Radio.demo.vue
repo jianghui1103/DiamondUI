@@ -3,8 +3,8 @@ Radio 单选框
 </demo>
 <template>
 <div>
-  <Radio v-model:value="radio" label="1" @change="radioChange">备选1</Radio>
-  <Radio v-model:value="radio" label="2" @change="radioChange">备选项2</Radio>
+  <Radio v-model:value="radio" label="1" @change="handleChange">备选1</Radio>
+  <Radio v-model:value="radio" label="2" @change="handleChange">备选项2</Radio>
 </div>
 </template>
 
@@ -16,12 +16,13 @@ export default {
     Radio
   },
   setup() {
-    const radio = ref('2')
-    const radioChange = (data)=> {
+    const radio = ref('1')
+    const handleChange = (value)=>{
+      console.log(value)
     }
     return {
       radio,
-      radioChange
+      handleChange
     }
   }
 }

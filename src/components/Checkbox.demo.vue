@@ -3,7 +3,7 @@
 </demo>
 <template>
 <div>
-  <Checkbox v-model:value="checked" >备选项</Checkbox>
+  <Checkbox v-model:modelValue="checked" @change="handleChange">备选项</Checkbox>
 </div>
 </template>
 
@@ -15,8 +15,11 @@ export default {
     Checkbox
   },
   setup(){
-    const checked = ref(true)
-    return { checked }
+    const checked = ref(true);
+    const handleChange = (value)=> {
+      console.log(value)
+    }
+    return { checked,handleChange }
   }
 }
 </script>

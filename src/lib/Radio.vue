@@ -2,7 +2,7 @@
     <label class="Diamond-radio" role="radio" :class="{'is-checked': radioVlue === label,'is-disabled':disabled}">
         <span class="Diamond-radio__input" :class="{'is-checked': radioVlue === label,'is-disabled':disabled}" >
             <span class="Diamond-radio__inner"></span>
-            <input class="Diamond-radio__original" type="radio" :disabled="disabled" :value="label" v-model="radioVlue"  @click="updataInp(label)">
+            <input class="Diamond-radio__original" type="radio" :disabled="disabled" :value="label" v-model="radioVlue"  @change.stop="updataInp(label)">
         </span>
         <span class="Diamond-radio__label">
             <slot />    
@@ -23,7 +23,6 @@ export default {
     },
     setup(props,context) {
         const { value,label } = props;
-        const radio = ref <HTMLDivElement> (null)
         const { radioGroup } = useCheckGroup()
 
         const radioVlue = computed(()=>{
@@ -45,7 +44,6 @@ export default {
         return {
             updataInp,
             radioVlue,
-            radio
         }
     },  
 }

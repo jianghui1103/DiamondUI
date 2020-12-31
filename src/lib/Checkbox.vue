@@ -1,8 +1,8 @@
 <template>
-    <label class="Diamond-checkbox" role="checkbox" >
-        <span class="Diamond-checkbox__input is-checked" role="false" >
+    <label class="Diamond-checkbox" role="checkbox" :class="{'is-checked':checkboxValue}" >
+        <span class="Diamond-checkbox__input" :class="{'is-checked':checkboxValue}" role="false" >
             <span class="Diamond-checkbox__inner"></span>
-            <input class="Diamond-checkbox__original" type="checkbox" value="true" />
+            <input class="Diamond-checkbox__original" type="checkbox" v-model="checkboxValue" @change.stop="handleClick" />
         </span>
         <span class="Diamond-checkbox__label">
             <slot />
@@ -10,7 +10,28 @@
     </label>
 </template>
 
-
+<script lang="ts">
+import { computed,nextTick } from 'vue'
+export default {
+    props: {
+        modelValue: Boolean,
+    },
+    setup(props,context) {
+        const checkboxValue = computed(()=>{
+            return props.modelValue
+        });
+        const handleClick = async ()=>{
+            await nextTick()
+            context.emit('change',!checkboxValue.value);
+            context.emit('update:modelValue',!checkboxValue.value);    
+        }
+        return {
+            checkboxValue,
+            handleClick
+        }
+    }
+}
+</script>
 
 <style lang="scss">
 .Diamond-checkbox, .Diamond-checkbox__input {
