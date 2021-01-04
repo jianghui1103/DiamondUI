@@ -1,29 +1,49 @@
-<template>
-    <label class="Diamond-checkbox" role="checkbox" :class="{'is-checked':checkboxValue}" >
-        <span class="Diamond-checkbox__input" :class="{'is-checked':checkboxValue}" role="false" >
+    <template>
+    <label class="Diamond-checkbox" role="checkbox" :class="{'is-checked':checkboxValue,'is-disabled':disabled}" >
+        <span class="Diamond-checkbox__input" :class="{'is-checked':checkboxValue,'is-disabled':disabled}" role="false" >
             <span class="Diamond-checkbox__inner"></span>
             <input class="Diamond-checkbox__original" type="checkbox" v-model="checkboxValue" @change.stop="handleClick" />
         </span>
         <span class="Diamond-checkbox__label">
+            <template v-if="!$slots.default">{{ label }}</template>
             <slot />
         </span>
     </label>
 </template>
 
 <script lang="ts">
-import { computed,nextTick } from 'vue'
+import { computed,nextTick, getCurrentInstance } from 'vue'
 export default {
     props: {
         modelValue: Boolean,
+        label: String || Number || Boolean,
+        disabled: {
+            type:Boolean,
+            default: false
+        },
     },
     setup(props,context) {
+        const { checkboxGroup } = useCheckGroup();
         const checkboxValue = computed(()=>{
-            return props.modelValue
+            if(checkboxGroup) {
+                return checkboxGroup.ctx.modelValue.includes(props.label)
+            }else {
+                return props.modelValue
+            }
         });
         const handleClick = async ()=>{
             await nextTick()
-            context.emit('change',!checkboxValue.value);
-            context.emit('update:modelValue',!checkboxValue.value);    
+            if(props.disabled) return false;
+            let modelValue = null;
+            if(checkboxGroup) {
+                modelValue = checkboxGroup.ctx.modelValue;
+                modelValue.includes(props.label) ?  modelValue.splice(modelValue.indexOf(props.label),1) : modelValue.push(props.label);
+            } else {
+                modelValue = !checkboxValue.value
+            }
+                console.log(modelValue)
+            context.emit('change',modelValue);
+            context.emit('update:modelValue',modelValue);    
         }
         return {
             checkboxValue,
@@ -31,6 +51,13 @@ export default {
         }
     }
 }
+function useCheckGroup() {
+    let { parent } = getCurrentInstance();
+    if(parent && parent.type.name === 'checkboxGroup') return { checkboxGroup: parent }
+    return {
+        checkboxGroup: null
+    }
+}   
 </script>
 
 <style lang="scss">
@@ -75,13 +102,22 @@ export default {
             transform: rotate(45deg) scaleY(1);
         }
     }
+    &.is-checked.is-disabled .Diamond-checkbox__inner{
+        background-color: rgb(242, 246, 252);
+        border-color: rgb(220, 223, 230);
+        &::after{
+            border-color: rgb(192, 196, 204);
+        }
+    }
     &.is-checked + .Diamond-checkbox__label {
         color: #409EFF;
     }
     &.is-disabled .Diamond-checkbox__inner {
         border-color: #E4E7ED;
+        cursor: not-allowed;
         background: #F5F7FA;
     }
+
     &.is-disabled + .Diamond-checkbox__label {
         color: #C0C4CC;
         cursor: not-allowed;
@@ -121,7 +157,6 @@ export default {
     background-color: #fff;
     z-index: 1;
     transition: border-color .25s cubic-bezier(.71,-.46,.29,1.46),background-color .25s cubic-bezier(.71,-.46,.29,1.46);
-    
 }
 
 </style>
