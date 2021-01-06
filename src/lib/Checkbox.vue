@@ -41,7 +41,6 @@ export default {
             } else {
                 modelValue = !checkboxValue.value
             }
-                console.log(modelValue)
             context.emit('change',modelValue);
             context.emit('update:modelValue',modelValue);    
         }

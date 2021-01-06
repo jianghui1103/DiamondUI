@@ -9,7 +9,9 @@ import Vue from 'vue'
 export default {
     name: 'checkboxGroup',
     props: {
-        modelValue: Array
+        modelValue: Array,
+        min: Number || String,
+        max: Number || String,
     },
     setup(props,context) {
     },
