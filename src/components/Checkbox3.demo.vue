@@ -21,7 +21,7 @@ export default {
     CheckboxGroup
   },
   setup(){
-    const checkList = ref(['选中且禁用', '复选框 A'])
+    const checkList = ref(['复选框 A'])
     const handleChange = (value)=> {
       console.log(value)
     }

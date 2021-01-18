@@ -26,6 +26,7 @@ export default {
         const { checkboxGroup } = useCheckGroup();
         const checkboxValue = computed(()=>{
             if(checkboxGroup) {
+                // console.log(checkboxGroup.ctx.min >= checkboxGroup.ctx.modelValue.length,checkboxGroup.ctx.max <= checkboxGroup.ctx.modelValue.length,checkboxGroup.ctx.modelValue);
                 return checkboxGroup.ctx.modelValue.includes(props.label)
             }else {
                 return props.modelValue
@@ -43,6 +44,9 @@ export default {
             }
             context.emit('change',modelValue);
             context.emit('update:modelValue',modelValue);    
+            // console.log(checkboxGroup.ctx.min,checkboxGroup.ctx.max,checkboxGroup.ctx.modelValue.length)
+            // console.log(checkboxGroup.ctx.min < checkboxGroup.ctx.modelValue.length && checkboxGroup.ctx.max > checkboxGroup.ctx.modelValue.length )
+
         }
         return {
             checkboxValue,

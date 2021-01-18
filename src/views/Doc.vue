@@ -51,6 +51,9 @@
                 <li>
                     <router-link to="/doc/select">Select 选择器</router-link>
                 </li>
+                <li>
+                    <router-link to="/doc/Table">Table 表格</router-link>
+                </li>
             </ol>
         </aside>
         <main>
