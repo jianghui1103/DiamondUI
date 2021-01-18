@@ -32,6 +32,10 @@ export default {
                 return props.modelValue
             }
         });
+        // 当父组件的value长度小于等于min的时候，剩余的value 不可被取消
+        // 当父组件的value长度大于等于max的时候，其余的value 不可被选择
+
+        
         const handleClick = async ()=>{
             await nextTick()
             if(props.disabled) return false;
@@ -46,7 +50,7 @@ export default {
             context.emit('update:modelValue',modelValue);    
             // console.log(checkboxGroup.ctx.min,checkboxGroup.ctx.max,checkboxGroup.ctx.modelValue.length)
             // console.log(checkboxGroup.ctx.min < checkboxGroup.ctx.modelValue.length && checkboxGroup.ctx.max > checkboxGroup.ctx.modelValue.length )
-
+            
         }
         return {
             checkboxValue,
