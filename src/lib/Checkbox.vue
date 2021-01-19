@@ -1,4 +1,4 @@
-    <template>
+<template>
     <label class="Diamond-checkbox" role="checkbox" :class="{'is-checked':checkboxValue,'is-disabled':isDisabled}" >
         <span class="Diamond-checkbox__input" :class="{'is-checked':checkboxValue,'is-disabled':isDisabled}" role="false" >
             <span class="Diamond-checkbox__inner"></span>

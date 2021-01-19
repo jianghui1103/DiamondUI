@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button class="Diamond-switch" @click="toggle" :class="{ 'Diamond-checked' : value }"> <span></span> </button>
+        <button disabled="disabled" class="Diamond-switch" @click="toggle" :class="{ 'Diamond-checked' : value }"> <span></span> </button>
     </div>
 </template>
 
@@ -8,7 +8,11 @@
 import { ref } from 'vue';
 export default {
     props: {
-      value: Boolean
+      value: Boolean,
+      disabled: {
+        type: Boolean,
+        default: false
+      }
     },
     setup(props,context) {
         const toggle = ()=> {
