@@ -7,6 +7,7 @@
     <Checkbox label="复选框 A"></Checkbox>
     <Checkbox label="复选框 B"></Checkbox>
     <Checkbox label="复选框 C"></Checkbox>
+    <Checkbox label="复选框 D"></Checkbox>
   </checkbox-group>
 </div>
 </template>

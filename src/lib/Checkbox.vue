@@ -1,6 +1,6 @@
     <template>
-    <label class="Diamond-checkbox" role="checkbox" :class="{'is-checked':checkboxValue,'is-disabled':disabled}" >
-        <span class="Diamond-checkbox__input" :class="{'is-checked':checkboxValue,'is-disabled':disabled}" role="false" >
+    <label class="Diamond-checkbox" role="checkbox" :class="{'is-checked':checkboxValue,'is-disabled':isDisabled}" >
+        <span class="Diamond-checkbox__input" :class="{'is-checked':checkboxValue,'is-disabled':isDisabled}" role="false" >
             <span class="Diamond-checkbox__inner"></span>
             <input class="Diamond-checkbox__original" type="checkbox" v-model="checkboxValue" @change.stop="handleClick" />
         </span>
@@ -26,19 +26,31 @@ export default {
         const { checkboxGroup } = useCheckGroup();
         const checkboxValue = computed(()=>{
             if(checkboxGroup) {
-                // console.log(checkboxGroup.ctx.min >= checkboxGroup.ctx.modelValue.length,checkboxGroup.ctx.max <= checkboxGroup.ctx.modelValue.length,checkboxGroup.ctx.modelValue);
                 return checkboxGroup.ctx.modelValue.includes(props.label)
             }else {
                 return props.modelValue
             }
         });
-        // 当父组件的value长度小于等于min的时候，剩余的value 不可被取消
-        // 当父组件的value长度大于等于max的时候，其余的value 不可被选择
 
+        const isDisabled = computed(()=> {
+            if(props.disabled) return true;
+            if(checkboxGroup) {
+                return (
+                    isDisabledFn()
+                )
+            }
+        })
+        // 限定长度，使复选框是否可以选择
+        const isDisabledFn = ()=>{
+            return (
+                (checkboxGroup.ctx.min >= checkboxGroup.ctx.modelValue.length && checkboxGroup.ctx.modelValue.indexOf(props.label) !== -1) || 
+                (checkboxGroup.ctx.max <= checkboxGroup.ctx.modelValue.length && checkboxGroup.ctx.modelValue.indexOf(props.label) === -1)
+            )
+        }
         
         const handleClick = async ()=>{
             await nextTick()
-            if(props.disabled) return false;
+            if(props.disabled || isDisabledFn()) return false;
             let modelValue = null;
             if(checkboxGroup) {
                 modelValue = checkboxGroup.ctx.modelValue;
@@ -48,13 +60,12 @@ export default {
             }
             context.emit('change',modelValue);
             context.emit('update:modelValue',modelValue);    
-            // console.log(checkboxGroup.ctx.min,checkboxGroup.ctx.max,checkboxGroup.ctx.modelValue.length)
-            // console.log(checkboxGroup.ctx.min < checkboxGroup.ctx.modelValue.length && checkboxGroup.ctx.max > checkboxGroup.ctx.modelValue.length )
             
         }
         return {
             checkboxValue,
-            handleClick
+            handleClick,
+            isDisabled
         }
     }
 }
