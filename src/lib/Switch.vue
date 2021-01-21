@@ -1,6 +1,8 @@
 <template>
-    <div>
-        <button disabled="disabled" class="Diamond-switch" @click="toggle" :class="{ 'Diamond-checked' : value }"> <span></span> </button>
+    <div @click="toggle" >
+        <span class="Diamond-switch__label Diamond-switch__label--left" :class="{ 'is-checked' : !value }">{{activeText}}</span> 
+        <button :disabled="disabled" class="Diamond-switch" :class="{ 'Diamond-checked' : value }"> <span></span> </button>
+        <span class="Diamond-switch__label Diamond-switch__label--right" :class="{ 'is-checked' : value }">{{inactiveText}}</span>
     </div>
 </template>
 
@@ -12,9 +14,12 @@ export default {
       disabled: {
         type: Boolean,
         default: false
-      }
+      },
+      activeText: String,
+      inactiveText: String,
     },
     setup(props,context) {
+      console.log(props.activeText,props.inactiveText,props.disabled)
         const toggle = ()=> {
           // 参数是 事件名 事件参数      父元素的$event的值是emit 的第二个参数
           context.emit('update:value', !props.value) // 触发父元素的input 事件 
@@ -34,6 +39,27 @@ export default {
     background: #bfbfbf;
     border-radius: $h/2;
     position: relative;
+    vertical-align: middle;
+    &__label{
+      transition: .2s;
+      height: 22px;
+      line-height: 22px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      vertical-align: middle;
+      color: #303133;
+      &--left{
+        margin-right: 10px;
+      }
+      &--right{
+        margin-left: 10px;
+      }
+      &.is-checked{
+        color: #1890ff;
+      }
+
+    }
     > span{
       position: absolute;
       top: 2px;
