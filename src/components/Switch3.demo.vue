@@ -5,6 +5,8 @@
 <Switch v-model:value="bool" 
   active-text="按月付费" 
   inactive-text="按年付费" 
+  active-color="#13ce66"
+  inactive-color="#ff4949"
   />
 </template>
 

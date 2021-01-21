@@ -17,6 +17,8 @@ export default {
       },
       activeText: String,
       inactiveText: String,
+      activeColor: String,
+      inactiveColor: String,
     },
     setup(props,context) {
       console.log(props.activeText,props.inactiveText,props.disabled)
