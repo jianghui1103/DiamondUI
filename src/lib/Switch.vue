@@ -15,8 +15,8 @@ export default {
         type: Boolean,
         default: false
       },
-      activeText: String,
-      inactiveText: String,
+      activeText: String || Boolean || Number,
+      inactiveText: String || Boolean || Number,
       activeColor: String,
       inactiveColor: String,
     },
