@@ -15,6 +15,7 @@ import InputDemo from './components/InputDemo/InputDemo.vue'
 import InputNumDemo from './components/InputNumDemo/InputNumDemo.vue'
 import SelectDemo from './components/SelectDemo/SelectDemo.vue'
 import TableDemo from './components/TableDemo/TableDemo.vue'
+import SliderDemo from './components/SliderDemo/SliderDemo.vue'
 import { h } from 'vue'
 const md = filename =>  h(Markdown,{path: `../markdown/${filename}.md`,key: filename})
 
@@ -39,7 +40,8 @@ export const router = createRouter({
             {path: 'input', component: InputDemo},
             {path: 'inputNumber', component: InputNumDemo},
             {path: 'select', component: SelectDemo},
-            {path: 'table', component: TableDemo}
+            {path: 'table', component: TableDemo},
+            {path: 'slider', component: SliderDemo},
         ]},
     ]
 })

@@ -54,6 +54,9 @@
                 <li>
                     <router-link to="/doc/Table">Table 表格</router-link>
                 </li>
+                <li>
+                    <router-link to="/doc/Slider">Slider 滑块</router-link>
+                </li>
             </ol>
         </aside>
         <main>

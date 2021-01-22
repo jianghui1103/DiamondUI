@@ -1,7 +1,7 @@
 <template>
     <div @click="toggle" >
         <span class="Diamond-switch__label Diamond-switch__label--left" :class="{ 'is-checked' : !value }">{{activeText}}</span> 
-        <button :disabled="true" class="Diamond-switch" :style="switchStyle" :class="{ 'Diamond-checked' : value }"> <span></span> </button>
+        <button :disabled="disabled" class="Diamond-switch" :style="switchStyle" :class="{ 'Diamond-checked' : value }"> <span></span> </button>
         <span class="Diamond-switch__label Diamond-switch__label--right" :class="{ 'is-checked' : value }">{{inactiveText}}</span>
     </div>
 </template>
