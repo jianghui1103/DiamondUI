@@ -1,13 +1,13 @@
 <template>
     <div @click="toggle" >
         <span class="Diamond-switch__label Diamond-switch__label--left" :class="{ 'is-checked' : !value }">{{activeText}}</span> 
-        <button :disabled="disabled" class="Diamond-switch" :class="{ 'Diamond-checked' : value }"> <span></span> </button>
+        <button :disabled="true" class="Diamond-switch" :style="switchStyle" :class="{ 'Diamond-checked' : value }"> <span></span> </button>
         <span class="Diamond-switch__label Diamond-switch__label--right" :class="{ 'is-checked' : value }">{{inactiveText}}</span>
     </div>
 </template>
 
 <script lang="ts">
-import { ref } from 'vue';
+import { ref,reactive } from 'vue';
 export default {
     props: {
       value: Boolean,
@@ -21,12 +21,19 @@ export default {
       inactiveColor: String,
     },
     setup(props,context) {
-      console.log(props.activeText,props.inactiveText,props.disabled)
+        const switchStyle = reactive({});
+        if(props.inactiveColor) switchStyle.background = props.inactiveColor;
         const toggle = ()=> {
+          if(props.disabled) return;
           // 参数是 事件名 事件参数      父元素的$event的值是emit 的第二个参数
           context.emit('update:value', !props.value) // 触发父元素的input 事件 
+          if(props.value) {
+            switchStyle.background = props.inactiveColor;         
+          }else{
+            switchStyle.background = props.activeColor;
+          }
         }
-        return {toggle}
+        return {toggle,switchStyle}
     }
 }
 </script>
