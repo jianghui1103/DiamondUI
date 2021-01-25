@@ -2,7 +2,7 @@
 基础用法
 </demo>
 <template>
-<div>
+<div class="slider-demo">
   <div class="block">
     <span class="demonstration">默认</span>
     <Diamond-slider v-model="value1"></Diamond-slider>
@@ -12,14 +12,6 @@
     <Diamond-slider v-model="value2"></Diamond-slider>
   </div>
   <div class="block">
-    <span class="demonstration">隐藏 Tooltip</span>
-    <Diamond-slider v-model="value3" :show-tooltip="false"></Diamond-slider>
-  </div>
-  <div class="block">
-    <span class="demonstration">格式化 Tooltip</span>
-    <Diamond-slider v-model="value4" :format-tooltip="formatTooltip"></Diamond-slider>
-  </div>
-  <div class="block">
     <span class="demonstration">禁用</span>
     <Diamond-slider v-model="value5" disabled></Diamond-slider>
   </div>
@@ -27,8 +19,11 @@
 </template>
 <script lang="ts">
   import { ref } from 'vue'
-  import DiamondSlider from '../../lib/Slider/Slider'
+  import DiamondSlider from '../../lib/Slider/Slider.vue'
   export default {
+    components: {
+      DiamondSlider,
+    },
     setup() {
       const value1 = ref(0)
       const value2 = ref(50)
@@ -51,3 +46,22 @@
     }
   }
 </script>
+
+<style lang="scss">
+.slider-demo{
+  padding: 30px 24px;
+  overflow: hidden;
+  border-bottom: 1px solid #eff2f6;
+  & .demonstration {
+      font-size: 14px;
+      color: #8492a6;
+      line-height: 44px;
+  }
+  & .demonstration+.Diamond-slider {
+    float: right;
+    width: 70%;
+    margin-right: 20px;
+  }
+}
+
+</style>
