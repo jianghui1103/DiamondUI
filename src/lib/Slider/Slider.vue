@@ -4,13 +4,8 @@
         <div class="Diamond-slider__bar">
         </div>
         <div class="Diamond-slider__button-wrapper">
-            <div class="Diamond-slider__button"  
-                @mouseenter="handleMouseEnter"
-                @mouseleave="handleMouseLeave"
-                @mousedown="onButtonDown"
-                @touchstart.passive="onButtonDown"
-                @keydown.down.prevent="onLeftKeyDown"
-                @keydown.up.prevent="onRightKeyDown"
+            <div class="Diamond-slider__button"
+                ref="sliderButton"
                 >
             </div>
         </div>
@@ -20,13 +15,21 @@
 
 
 <script lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 export default {
     props: {
         value: Number
     },
     setup(){
         const hovers = ref(false);
+        const sliderButton = ref(null);
+        // 监听点击 移动 移开动作
+        onMounted(()=>{
+            console.log(sliderButton)
+            sliderButton.value.onmousedown = function(e){
+                console.log(e.clientX)
+            }
+        })
 
         const sliderRunwaryLeft = computed(()=> {
 
@@ -37,7 +40,8 @@ export default {
         } 
 
         return {
-            onClickSlider
+            onClickSlider,
+            sliderButton
         }
     }
 }
