@@ -5,15 +5,15 @@
 <div class="slider-demo">
   <div class="block">
     <span class="demonstration">默认</span>
-    <Diamond-slider v-model="value1"></Diamond-slider>
+    <Diamond-slider v-model:modelValue="value1"></Diamond-slider>
   </div>
   <div class="block">
     <span class="demonstration">自定义初始值</span>
-    <Diamond-slider v-model="value2"></Diamond-slider>
+    <Diamond-slider v-model:modelValue="value2"></Diamond-slider>
   </div>
   <div class="block">
     <span class="demonstration">禁用</span>
-    <Diamond-slider v-model="value5" disabled></Diamond-slider>
+    <Diamond-slider v-model:modelValue="value5" disabled></Diamond-slider>
   </div>
 </div>
 </template>
