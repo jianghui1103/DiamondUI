@@ -3,7 +3,6 @@
     <div class="Diamond-slider__runwary">
         <div class="Diamond-slider__bar" :style="{'width':sliderWidth}">
         </div>
-        {{sliderWidth}}
         <div class="Diamond-slider__button-wrapper" :style="{'left':sliderLeft}">
             <div class="Diamond-slider__button"
             ref="sliderButton" 
@@ -29,7 +28,7 @@ export default {
             default: 100
         }
     },
-    setup(props){
+    setup(props,context){
         const hovers = ref(false);
         const sliderButton = ref(null);
         const slider = ref(null);
@@ -37,12 +36,17 @@ export default {
         onMounted(()=>{
             sliderButton.value.onmousedown = function(e){
                 let width = parseInt(sliderWidth.value);
+                let disX = e.clientX;
                 document.onmousemove = function(e) {
                     // value, left, width
                     // 当value变化的时候，会通过计算属性修改left，width
                     // 拖拽的时候获取的新width
-                    // 
-                    
+                    let newWidth = e.clientX - disX + width;
+                    let scale = newWidth / slider.value.offsetWidth;
+                    let value = Math.ceil((props.max-props.min) * scale + props.min);
+                    value = Math.min(value,props.max)
+                    value = Math.max(value,props.min)
+                    context.emit('update:modelValue', value)
                 }
                 document.onmouseup = function(e) {
                     document.onmousemove = document.onmouseup = null;
@@ -51,9 +55,6 @@ export default {
             }
         })
 
-        const onClickSlider = ()=> {
-
-        } 
         // 设置一个百分比，提供计算slider进度宽度和trunk的left值
         // 对应公式为  当前值-最小值/最大值-最小值 = slider进度width / slider总width
         // trunk left =  slider进度width + trunk宽度/2
@@ -70,14 +71,13 @@ export default {
 
         const sliderLeft = computed(()=>{
             if(slider.value) {
-                return slider.value.offsetWidth * scale.value - sliderButton.value.offsetWidth / 2 + 'px';
+                return slider.value.offsetWidth * scale.value + 'px';
             }else{
                 return '0px'
             }
         })
 
         return {
-            onClickSlider,
             sliderButton,
             slider,
             sliderWidth,
