@@ -1,12 +1,19 @@
 <template>
 <div class="Diamond-slider" ref="slider">
-    <div class="Diamond-slider__runwary">
+    <div class="Diamond-slider__runwary" :class="{disabled}">
         <div class="Diamond-slider__bar" :style="{'width':sliderWidth}">
         </div>
         <div class="Diamond-slider__button-wrapper" :style="{'left':sliderLeft}">
             <div class="Diamond-slider__button"
             ref="sliderButton" 
+            @mouseenter="isHover = true"
+            @mouseleave="isHover = false"
                 >
+            </div>
+            <div class="tips" v-show="isHover">
+                <span>{{modelValue}}</span>
+                <div class="popper__arrow">
+                </div>
             </div>
         </div>
     </div>
@@ -26,17 +33,29 @@ export default {
         max: {
             type: Number,
             default: 100
+        },
+        disabled: {
+            type: Boolean,
+            default: false
         }
     },
     setup(props,context){
-        const hovers = ref(false);
+        const isHover = ref(false);
         const sliderButton = ref(null);
         const slider = ref(null);
         // 监听点击 移动 移开动作
         onMounted(()=>{
+            if(props.disabled) return false;
+            sliderButton.value.onmouseenter = function(e) {
+                isHover.value = true;
+            }
+            sliderButton.value.onmouseleave = function(e) {
+                isHover.value = false;
+            }
             sliderButton.value.onmousedown = function(e){
                 let width = parseInt(sliderWidth.value);
                 let disX = e.clientX;
+                
                 document.onmousemove = function(e) {
                     // value, left, width
                     // 当value变化的时候，会通过计算属性修改left，width
@@ -81,7 +100,8 @@ export default {
             sliderButton,
             slider,
             sliderWidth,
-            sliderLeft
+            sliderLeft,
+            isHover
         }
     }
 }
@@ -100,6 +120,21 @@ $h: 6px;
         position: relative;
         cursor: pointer;
         // visibility: hidden;
+        &.disabled{
+            cursor: default;
+            & .Diamond-slider{
+                &__bar{
+                    background-color: #c0c4cc;
+                }
+                &__button {
+                    cursor:not-allowed;
+                    transform: scale(1);
+                    border-color: #c0c4cc;
+                }
+            }
+
+ 
+        }
     }
     &__bar {
         height: 6px;
@@ -140,6 +175,27 @@ $h: 6px;
                 content: '';
                 height: 100%;
             }
+            & .tips{
+                position: absolute;
+                background: #303133;
+                padding: 10px;
+                border-radius: 4px;
+                font-size: 12px;
+                line-height: 1.2;
+                min-width: 10px;
+                color: #fff;
+                bottom: 35px;
+                    .popper__arrow,
+                    .popper__arrow::after {
+                        position: absolute;
+                        display: block;
+                        width: 0;
+                        height: 0;
+                        border-color: transparent;
+                        border-style: solid;
+                    }
+            }
+            
         }
     }
 }
