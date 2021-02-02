@@ -37,6 +37,10 @@ export default {
         disabled: {
             type: Boolean,
             default: false
+        },
+        step: {
+            type: Number,
+            default: 1
         }
     },
     setup(props,context){
@@ -65,6 +69,7 @@ export default {
                     let value = Math.ceil((props.max-props.min) * scale + props.min);
                     value = Math.min(value,props.max)
                     value = Math.max(value,props.min)
+                    value = Math.round(value/props.step) * props.step
                     context.emit('update:modelValue', value)
                 }
                 document.onmouseup = function(e) {
