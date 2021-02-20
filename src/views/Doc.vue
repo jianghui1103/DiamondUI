@@ -57,6 +57,9 @@
                 <li>
                     <router-link to="/doc/Slider">Slider 滑块</router-link>
                 </li>
+                <li>
+                    <router-link to="/doc/Cascader">Cascader 级联选择器</router-link>
+                </li>
             </ol>
         </aside>
         <main>

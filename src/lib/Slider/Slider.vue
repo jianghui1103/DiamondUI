@@ -20,7 +20,6 @@
 </div>
 </template>
 
-
 <script lang="ts">
 import { computed, ref, onMounted } from 'vue'
 export default {
