@@ -4,11 +4,11 @@
 <template>
     <div>
         <div class="block">
-            <el-cascader
+            <DCascader
                 v-model="value"
                 :options="options"
                 @change="handleChange"
-            ></el-cascader>
+            ></DCascader>
         </div>
     </div>
 </template>
@@ -299,3 +299,10 @@ export default {
     }
 }
 </script>
+
+
+<style lang="scss" scoped>
+.block{
+    width: 140px;
+}
+</style>

@@ -162,9 +162,6 @@ $grey: grey;
     }
   }
 }
-.Diamond-input{
-  width: 140px;
-}
 .icons{
   height: 100%;
 }
