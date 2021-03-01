@@ -1,61 +1,32 @@
 <template>
-<div 
-    class="Diamond-cascader"
->
-    <DInput 
-        :disabled="true" 
-        :readonly="true"
-        placeholder="请选择"
-        v-model:modelValue="cascaderValue.label"
-        @click="toggleDropDownVisible"
-    ></DInput>
-    <transition name="Diamond-zoom-in-top">
-        <div class="Diamond-cascader-panel">
-            <div
-                v-show="dropDownVisible"
-                ref="popper"
-                :class="['Diamond-cascader__dropdown', popperClass]"
-            >
-                <CascaderPancel :options="options" @change="change"/>
-            </div>
-        </div>
-
-    </transition>
-</div>
+    <div class="Diamond-cascader-menu">
+        <ul class="Diamond-cascader-menu-wrapper">
+            <li class="Diamond-cascader-menu-node" v-for="(item,index) in options" :key="index" @click="handleClick(item)">
+                <span class="Diamond-cascader-menu-node_label">{{item.label}}</span>
+                <svg class="icon">
+                    <use xlink:href="#icon-xiangzuo"></use>
+                </svg>
+            </li>
+        </ul>
+    </div>
 </template>
 
 <script lang="ts">
-import DInput from '../Input/Input.vue'
-import CascaderPancel from './CascaderPancel.vue'
-import { ref,createApp,onUnmounted } from 'vue'
+import { inject } from 'vue'
 export default {
-    components: { DInput,CascaderPancel},
     props: {
         options: Object
     },
-
-    setup(props,context){
-        const dropDownVisible = ref(true);
-        const cascaderValue = ref(null);
-        const popper = ref(null)
-        const toggleDropDownVisible = ()=> {
-            dropDownVisible.value = !dropDownVisible.value
-        }
-        const change = (value)=> {
-            cascaderValue.value = value
-            context.emit('change',value)
-            context.emit('update:value',value)
-            console.log(cascaderValue.value)
+    setup(props,{emit}){
+        const handleClick = (item)=>{
+            emit('update:changeNode', item);
         }
         return {
-            popper,
-            dropDownVisible,
-            cascaderValue,
-            toggleDropDownVisible,
-            change
+            handleClick
         }
-    }
+    },
 }
+
 </script>
 
 <style lang="scss" scoped>

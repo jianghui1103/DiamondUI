@@ -5,7 +5,7 @@
     <div>
         <div class="block">
             <DCascader
-                v-model="value"
+                v-model:value="value"
                 :options="options"
                 @change="handleChange"
             ></DCascader>
@@ -22,11 +22,13 @@ export default {
     },
     setup() {
         const value = ref('');
-        const handleChange = (value) => {
+        const handleChange = (changeValue) => {
+            console.log(changeValue)
             console.log(value)
         }
         return { 
             value,
+            handleChange,
             options: [
                 {
                 value: 'zhinan',
