@@ -1,7 +1,7 @@
 <template>
     <div class="Diamond-cascader-menu">
         <ul class="Diamond-cascader-menu-wrapper">
-            <li class="Diamond-cascader-menu-node" v-for="(item,index) in options" :key="index" @click="handleClick(item)">
+            <li class="Diamond-cascader-menu-node" :class="{disabled: item.disabled}" v-for="(item,index) in options" :key="index" @click="handleClick(item)">
                 <span class="Diamond-cascader-menu-node_label">{{item.label}}</span>
                 <svg class="icon">
                     <use xlink:href="#icon-xiangzuo"></use>
@@ -19,6 +19,7 @@ export default {
     },
     setup(props,{emit}){
         const handleClick = (item)=>{
+            if(item.disabled) return false;
             emit('update:changeNode', item);
         }
         return {
@@ -82,6 +83,10 @@ export default {
         }
         &-node:hover{
             background-color: #f5f5f5;
+        }
+        &-node.disabled{
+            color: #c0c4cc;
+            cursor: not-allowed;
         }
     }
 }

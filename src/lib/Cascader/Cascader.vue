@@ -27,7 +27,7 @@
 <script lang="ts">
 import DInput from '../Input/Input.vue'
 import CascaderPancel from './CascaderPancel.vue'
-import { ref,createApp,onUnmounted } from 'vue'
+import { ref,createApp,onUnmounted, reactive } from 'vue'
 export default {
     components: { DInput,CascaderPancel},
     props: {
@@ -35,18 +35,22 @@ export default {
     },
 
     setup(props,context){
-        const dropDownVisible = ref(true);
-        const cascaderValue = ref(null);
+        const dropDownVisible = ref(false);
+        const cascaderValue = reactive({value: '', label: ''});
         const popper = ref(null)
         const toggleDropDownVisible = ()=> {
             dropDownVisible.value = !dropDownVisible.value
         }
         const change = (value)=> {
-            cascaderValue.value = value
-            context.emit('change',value)
-            context.emit('update:value',value)
-            console.log(cascaderValue.value)
+            cascaderValue.value = value.value
+            cascaderValue.label = value.label
+            context.emit('change',cascaderValue)
+            context.emit('update:value',cascaderValue)
         }
+        const resetCascaderValue = ()=>{
+            change({value: '', label: '请选择'})
+        }
+        resetCascaderValue()
         return {
             popper,
             dropDownVisible,
